@@ -5,3 +5,9 @@ All notable changes to kernelkite are documented here. The format follows
 to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+Nothing yet.
+
+## [0.1.0] — 2026-08-31
+
+Initial release: a working, honest local developer-loop process profiler.
