@@ -17,3 +17,9 @@ Initial release: a working, honest local developer-loop process profiler.
 - **Rust core (`kernelkite-core`)**
   - Serializable data model: `ProcessSample`, `Frame`, `NetworkSummary`,
     `CaptureMeta`, `ProfileBundle` (bundle schema **v1**).
+  - `Sampler` trait with three backends:
+    - `proc` — Linux `/proc` sampler reading CPU (`stat`), memory (`statm`),
+      block I/O (`io`), open fds (`fd/`) and an optional host-wide network
+      summary (`net/dev`). **Implemented.**
+    - `fixture` — deterministic cross-platform replay of recorded timelines.
+      **Implemented.**
