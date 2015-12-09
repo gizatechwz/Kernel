@@ -11,3 +11,9 @@ Nothing yet.
 ## [0.1.0] — 2026-08-31
 
 Initial release: a working, honest local developer-loop process profiler.
+
+### Added
+
+- **Rust core (`kernelkite-core`)**
+  - Serializable data model: `ProcessSample`, `Frame`, `NetworkSummary`,
+    `CaptureMeta`, `ProfileBundle` (bundle schema **v1**).
