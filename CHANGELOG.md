@@ -29,3 +29,9 @@ Initial release: a working, honest local developer-loop process profiler.
     spaces and parentheses.
   - Pid filters: `All`, `Subtree(pid)`, `Set(pids)`.
   - Live command runner (`run_and_profile`) that spawns a child, profiles its
+    process subtree on cadence, and records the exit code.
+  - Capture loop (`capture`) with a safety frame bound.
+  - Analysis: `summarize` (CPU seconds, peak RSS, I/O and network deltas) and
+    `compare` (before/after `Delta`s with percentage change).
+  - Deterministic JSON bundle I/O with schema-version validation.
+  - Cross-platform compilation via `cfg` guards: on non-Linux hosts the `proc`
