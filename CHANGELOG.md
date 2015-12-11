@@ -41,3 +41,9 @@ Initial release: a working, honest local developer-loop process profiler.
     `help`, `version`.
   - Global flags: `--interval-ms`, `--max-frames`, `--label`, `--network`,
     `--json`.
+  - Dependency-light hand-rolled argument parser.
+  - Human-readable and `--json` output for `summary` and `compare`.
+- **TypeScript timeline viewer (`@kernelkite/viewer`)**
+  - Strict, defensively-validated viewer-document parser.
+  - Framework-free inline-SVG timeline renderer (per-process CPU sparklines +
+    peak-memory annotations) and a standalone-HTML wrapper with no remote assets.
