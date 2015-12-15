@@ -44,3 +44,13 @@ Requirements: a stable Rust toolchain (1.74+) and, for the viewer, Node 18+.
 ```bash
 git clone https://github.com/Mujung/KernelKite
 cd kernelkite
+
+cargo build --release          # -> target/release/kernelkite
+cd viewer && npm install && npm run build && cd ..
+```
+
+The Makefile wraps the common targets:
+
+```bash
+make build      # release build of the workspace
+make test       # full Rust test suite
