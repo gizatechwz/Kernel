@@ -23,3 +23,13 @@ The design goal is narrow on purpose: measure what your machine actually did dur
 
 The launched command forks a subtree. On every interval kernelkite snapshots each in-scope process into a frame. A bundle is the ordered list of frames plus the host constants used to record them. Derived metrics are computed from counter deltas at analysis time, never baked into the capture.
 
+Because a fixture records its own timestamps and omits wall-clock time, the same fixture always produces the same bytes. The entire `samples/` directory is generated from the shipped fixtures, and CI fails if it drifts.
+
+## Backends
+
+| Backend   | Status          | Platform   | Behavior                                            |
+|-----------|-----------------|------------|-----------------------------------------------------|
+| `proc`    | implemented     | Linux only | Samples `/proc` on every tick.                      |
+| `fixture` | implemented     | any OS     | Replays a recorded timeline, deterministically.     |
+| `ebpf`    | stub, not built | none       | Reserved. Returns `Error::Unsupported`, never fakes data. |
+
