@@ -54,3 +54,14 @@ The Makefile wraps the common targets:
 ```bash
 make build      # release build of the workspace
 make test       # full Rust test suite
+make viewer     # build + test the TS viewer
+make ci         # everything CI runs
+make demo       # summary + comparison from the shipped samples
+```
+
+## Usage walkthrough
+
+Profile a real build on Linux, scoped to the child and everything it forks:
+
+```bash
+kernelkite --label before --interval-ms 50 run before.bundle.json -- cargo build
