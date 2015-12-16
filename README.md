@@ -75,3 +75,13 @@ kernelkite --label after --interval-ms 50 run after.bundle.json -- cargo build
 
 Print what the sampler saw:
 
+```bash
+kernelkite summary before.bundle.json
+```
+
+```text
+Profile summary: before [proc]
+  duration      : 1500 ms
+  frames        : 7
+  distinct pids : 4
+  cpu seconds   : 2.790
