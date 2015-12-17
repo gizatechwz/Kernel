@@ -117,3 +117,13 @@ write_bytes           2691072.000      1196032.000   -1495040.000     -55.6%
 </p>
 
 The chart proportions above come straight from `samples/comparison.json`: a third off wall time, more than half the CPU, and 60 percent less peak memory, with one fewer process in the subtree.
+
+Reconstruct the process lineage:
+
+```bash
+kernelkite tree before.bundle.json
+```
+
+```text
+Process tree (4 pids)
+5000 cargo
