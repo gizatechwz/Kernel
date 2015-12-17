@@ -85,3 +85,14 @@ Profile summary: before [proc]
   frames        : 7
   distinct pids : 4
   cpu seconds   : 2.790
+  peak rss      : 943.00 MiB
+  disk read     : 3.34 MiB
+  disk write    : 2.57 MiB
+  network       : (not sampled)
+```
+
+That block is the exact output from `fixtures/cargo-build-before.json`. Reproduce it with `make demo`.
+
+Diff the two runs:
+
+```bash
