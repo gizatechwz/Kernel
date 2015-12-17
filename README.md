@@ -96,3 +96,13 @@ That block is the exact output from `fixtures/cargo-build-before.json`. Reproduc
 Diff the two runs:
 
 ```bash
+kernelkite compare before.bundle.json after.bundle.json
+```
+
+```text
+Comparison: before -> after
+
+metric                     before            after         change        pct
+----------------------------------------------------------------------------
+duration_ms              1500.000         1000.000       -500.000     -33.3%
+cpu_seconds                 2.790            1.230         -1.560     -55.9%
