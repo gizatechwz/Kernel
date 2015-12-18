@@ -148,3 +148,13 @@ const doc = parseViewerDocument(JSON.parse(await readFile("before.viewer.json", 
 const svg = renderTimelineSvg(doc, { width: 1000 });
 ```
 
+## Working anywhere with fixtures
+
+`/proc` only exists on Linux, but the tooling should run everywhere for development, demos, mixed-runner CI, and reproducible regression tests. A fixture is a JSON timeline plus the host constants used to record it. Replay turns it into a normal bundle:
+
+```bash
+kernelkite --label before replay fixtures/cargo-build-before.json samples/before.bundle.json
+kernelkite --label after  replay fixtures/cargo-build-after.json  samples/after.bundle.json
+```
+
+The shipped fixtures model a `cargo` build: `cargo` forks two parallel `rustc` processes that climb and burn, then `ld` links, then everything exits. The after fixture is the same build post-optimization, with fewer processes and lower peaks.
