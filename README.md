@@ -158,3 +158,14 @@ kernelkite --label after  replay fixtures/cargo-build-after.json  samples/after.
 ```
 
 The shipped fixtures model a `cargo` build: `cargo` forks two parallel `rustc` processes that climb and burn, then `ld` links, then everything exits. The after fixture is the same build post-optimization, with fewer processes and lower peaks.
+
+## How the numbers are derived
+
+kernelkite is a sampling profiler. Every `--interval-ms` it snapshots each in-scope process into a frame; metrics come from deltas of cumulative kernel counters:
+
+- `cpu_seconds`: summed `(last - first)` CPU ticks per pid divided by the host tick rate.
+- `peak_rss_bytes`: max over frames of summed resident memory.
+- `read`/`write_bytes`: summed deltas of `/proc/<pid>/io` storage counters.
+- `network`: last-minus-first of a host-wide `/proc/net/dev` summary, labeled host-wide because per-process attribution needs a kernel probe that is not built.
+
+The one genuinely tricky parse, `/proc/<pid>/stat` whose `comm` field can contain spaces and parentheses like `(my cmd)`, is handled by finding the last `)` and splitting positionally, and it is unit-tested. The full field-by-field methodology, determinism guarantees, and limitations live in [`docs/PROFILE.md`](docs/PROFILE.md).
