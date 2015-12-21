@@ -179,3 +179,14 @@ kernelkite/
 │   │   └── src/                   # model, sampler, proc_linux, fixture, ebpf, runner, compare, bundle, error
 │   └── kernelkite-cli/            # the kernelkite binary (main, args, render)
 ├── viewer/                        # TypeScript timeline viewer (index, model, timeline, cli + tests)
+├── fixtures/                      # deterministic input timelines
+├── samples/                       # generated bundles, comparison, viewer docs, SVG
+├── docs/                          # PROFILE.md + local SVG assets
+└── Makefile, LICENSE, CHANGELOG.md, .github/workflows/ci.yml
+```
+
+## CLI reference
+
+```
+kernelkite [GLOBAL FLAGS] <COMMAND> [ARGS]
+
