@@ -200,3 +200,13 @@ COMMANDS
   help | version
 
 GLOBAL FLAGS
+  --interval-ms <N>   Sampling interval in ms (default 100).
+  --max-frames <N>    Max frames to capture (default 100).
+  --label <TEXT>      Label stored in the bundle.
+  --network           Include a host-wide network summary (Linux /proc).
+  --json              Machine-readable output for summary / compare.
+```
+
+Both `summary` and `compare` accept `--json` for piping:
+
+```bash
