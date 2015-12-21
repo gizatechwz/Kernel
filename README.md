@@ -210,3 +210,14 @@ GLOBAL FLAGS
 Both `summary` and `compare` accept `--json` for piping:
 
 ```bash
+kernelkite --json compare before.bundle.json after.bundle.json | jq '.deltas[] | select(.metric=="cpu_seconds")'
+```
+
+## Testing and CI
+
+- Rust: cross-platform tests (fixtures, comparison, bundle round-trip, schema validation, the eBPF stub refusal) run on every OS. On Linux an extra suite drives the real `/proc` parser against a synthetic procfs tree built in a temp directory.
+- TypeScript: `node --test` covers the document parser (including misaligned-array and XML-escaping edge cases) and the SVG renderer (valid root, one polyline per series, no remote URLs).
+- CI matrix: GitHub Actions builds and tests on Ubuntu and Windows, builds the `ebpf`-feature stub, and regenerates `samples/` to fail on drift.
+
+```bash
+cargo test --workspace           # Rust
