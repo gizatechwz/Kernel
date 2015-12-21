@@ -190,3 +190,13 @@ kernelkite/
 ```
 kernelkite [GLOBAL FLAGS] <COMMAND> [ARGS]
 
+COMMANDS
+  run <bundle.json> -- <cmd> [args...]   Live-profile a command via /proc (Linux).
+  replay <fixture.json> <bundle.json>    Deterministically replay a fixture.
+  summary <bundle.json>                  Print derived metrics for a bundle.
+  compare <before.json> <after.json>     Before/after comparison report.
+  tree <bundle.json>                     Print the observed process tree.
+  viewer <bundle.json> [out.json]        Emit timeline JSON for the TS viewer.
+  help | version
+
+GLOBAL FLAGS
