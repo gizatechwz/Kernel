@@ -18,3 +18,15 @@ pub enum Backend {
     Proc,
     /// Deterministic fixture replay (cross-platform, implemented).
     Fixture,
+    /// eBPF backend — reserved for the future, not implemented.
+    Ebpf,
+}
+
+impl Backend {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Backend::Proc => "proc",
+            Backend::Fixture => "fixture",
+            Backend::Ebpf => "ebpf",
+        }
+    }
