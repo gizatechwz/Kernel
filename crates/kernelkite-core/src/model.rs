@@ -30,3 +30,15 @@ impl Backend {
             Backend::Ebpf => "ebpf",
         }
     }
+}
+
+/// A single per-process measurement at one sampling instant.
+///
+/// Counters are cumulative where the kernel exposes them cumulatively
+/// (CPU jiffies, I/O byte counts). Derived rates are computed at analysis
+/// time so the raw bundle stays a faithful record of what was observed.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct ProcessSample {
+    /// Process id.
+    pub pid: i32,
+    /// Parent process id (0 if unknown / root).
