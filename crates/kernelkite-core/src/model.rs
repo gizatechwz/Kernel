@@ -42,3 +42,15 @@ pub struct ProcessSample {
     /// Process id.
     pub pid: i32,
     /// Parent process id (0 if unknown / root).
+    pub ppid: i32,
+    /// Short command name (comm).
+    pub comm: String,
+    /// User-space CPU time in clock ticks since process start.
+    pub utime_ticks: u64,
+    /// Kernel-space CPU time in clock ticks since process start.
+    pub stime_ticks: u64,
+    /// Resident set size in bytes.
+    pub rss_bytes: u64,
+    /// Virtual memory size in bytes.
+    pub vsize_bytes: u64,
+    /// Number of threads.
