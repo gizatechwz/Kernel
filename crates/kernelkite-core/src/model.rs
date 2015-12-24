@@ -54,3 +54,15 @@ pub struct ProcessSample {
     /// Virtual memory size in bytes.
     pub vsize_bytes: u64,
     /// Number of threads.
+    pub threads: u32,
+    /// Cumulative bytes read (storage layer), if available.
+    pub read_bytes: Option<u64>,
+    /// Cumulative bytes written (storage layer), if available.
+    pub write_bytes: Option<u64>,
+    /// Number of open file descriptors, if available.
+    pub open_fds: Option<u32>,
+}
+
+/// One timeline frame: every process observed at a single instant.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Frame {
