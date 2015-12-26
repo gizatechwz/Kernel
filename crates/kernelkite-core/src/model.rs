@@ -90,3 +90,15 @@ impl Frame {
     }
 }
 
+/// Coarse, host-wide network counters. Sampled from `/proc/net/dev` on Linux.
+/// This is intentionally a *summary* — kernelkite does not attribute traffic
+/// to individual processes without an eBPF backend (which is not implemented).
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct NetworkSummary {
+    /// Cumulative received bytes across sampled interfaces.
+    pub rx_bytes: u64,
+    /// Cumulative transmitted bytes across sampled interfaces.
+    pub tx_bytes: u64,
+    /// Interfaces that contributed to the summary.
+    pub interfaces: Vec<String>,
+}
