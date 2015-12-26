@@ -78,3 +78,15 @@ pub struct Frame {
 
 impl Frame {
     pub fn new(t_ms: u64) -> Self {
+        Frame {
+            t_ms,
+            processes: BTreeMap::new(),
+            network: None,
+        }
+    }
+
+    pub fn insert(&mut self, s: ProcessSample) {
+        self.processes.insert(s.pid, s);
+    }
+}
+
