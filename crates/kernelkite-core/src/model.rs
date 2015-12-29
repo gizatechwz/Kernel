@@ -126,3 +126,15 @@ pub struct CaptureMeta {
     /// Host operating system family ("linux", "windows", "macos", ...).
     pub host_os: String,
     /// Exit code of the profiled command, if it terminated.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub exit_code: Option<i32>,
+}
+
+/// A complete, self-contained profile bundle.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct ProfileBundle {
+    pub meta: CaptureMeta,
+    pub frames: Vec<Frame>,
+}
+
+impl ProfileBundle {
