@@ -114,3 +114,15 @@ pub struct CaptureMeta {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub command: Option<Vec<String>>,
     /// Clock ticks per second on the capturing host (SC_CLK_TCK).
+    pub clock_ticks_per_sec: u64,
+    /// Page size in bytes on the capturing host.
+    pub page_size_bytes: u64,
+    /// Requested sampling interval in milliseconds.
+    pub interval_ms: u64,
+    /// Wall-clock start, seconds since the Unix epoch. `None` for fixtures so
+    /// bundles stay byte-for-byte deterministic.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub started_unix_secs: Option<u64>,
+    /// Host operating system family ("linux", "windows", "macos", ...).
+    pub host_os: String,
+    /// Exit code of the profiled command, if it terminated.
