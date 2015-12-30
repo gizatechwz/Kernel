@@ -138,3 +138,15 @@ pub struct ProfileBundle {
 }
 
 impl ProfileBundle {
+    /// Total wall-clock span covered by the frames, in milliseconds.
+    pub fn duration_ms(&self) -> u64 {
+        match (self.frames.first(), self.frames.last()) {
+            (Some(a), Some(b)) => b.t_ms.saturating_sub(a.t_ms),
+            _ => 0,
+        }
+    }
+
+    /// Every distinct pid that appears anywhere in the timeline.
+    pub fn pids(&self) -> Vec<i32> {
+        let mut set = std::collections::BTreeSet::new();
+        for f in &self.frames {
