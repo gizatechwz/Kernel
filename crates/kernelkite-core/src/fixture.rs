@@ -6,3 +6,10 @@
 //! including Windows, where `/proc` does not exist.
 
 use crate::error::{Error, Result};
+use crate::model::{Backend, Frame};
+use crate::sampler::{HostInfo, Sampler};
+use serde::{Deserialize, Serialize};
+
+/// On-disk fixture format.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Fixture {
