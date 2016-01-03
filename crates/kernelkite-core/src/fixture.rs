@@ -28,3 +28,11 @@ impl Fixture {
         Self::from_json(&raw)
     }
 
+    /// Parse a fixture from a JSON string, validating frame ordering.
+    pub fn from_json(raw: &str) -> Result<Self> {
+        let fx: Fixture = serde_json::from_str(raw)?;
+        let mut last = None;
+        for f in &fx.frames {
+            if let Some(prev) = last {
+                if f.t_ms < prev {
+                    return Err(Error::Invalid(format!(
