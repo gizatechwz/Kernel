@@ -21,3 +21,10 @@ pub struct Fixture {
     pub frames: Vec<Frame>,
 }
 
+impl Fixture {
+    /// Load a fixture from a JSON file.
+    pub fn load(path: impl AsRef<std::path::Path>) -> Result<Self> {
+        let raw = std::fs::read_to_string(path)?;
+        Self::from_json(&raw)
+    }
+
