@@ -36,3 +36,10 @@ impl Fixture {
             if let Some(prev) = last {
                 if f.t_ms < prev {
                     return Err(Error::Invalid(format!(
+                        "fixture frames must be non-decreasing in t_ms (saw {} after {})",
+                        f.t_ms, prev
+                    )));
+                }
+            }
+            last = Some(f.t_ms);
+        }
