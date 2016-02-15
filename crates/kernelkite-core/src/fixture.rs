@@ -51,3 +51,10 @@ impl Fixture {
 pub struct FixtureSampler {
     frames: std::vec::IntoIter<Frame>,
     host: HostInfo,
+}
+
+impl FixtureSampler {
+    pub fn new(fixture: Fixture) -> Self {
+        FixtureSampler {
+            host: HostInfo {
+                clock_ticks_per_sec: fixture.clock_ticks_per_sec,
