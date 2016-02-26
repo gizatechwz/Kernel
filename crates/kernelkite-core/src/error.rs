@@ -15,3 +15,9 @@ pub enum Error {
     /// on this build/platform (e.g. the eBPF backend).
     Unsupported(String),
     /// The bundle on disk uses a schema version this build cannot read.
+    SchemaMismatch { found: u32, expected: u32 },
+    /// Generic invalid-input error with a human-readable message.
+    Invalid(String),
+}
+
+impl fmt::Display for Error {
