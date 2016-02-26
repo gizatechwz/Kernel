@@ -21,3 +21,9 @@ pub enum Error {
 }
 
 impl fmt::Display for Error {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Error::Io(e) => write!(f, "io error: {e}"),
+            Error::Json(e) => write!(f, "json error: {e}"),
+            Error::Parse { path, reason } => {
+                write!(f, "failed to parse {path}: {reason}")
