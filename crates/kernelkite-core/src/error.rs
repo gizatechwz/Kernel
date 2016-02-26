@@ -27,3 +27,9 @@ impl fmt::Display for Error {
             Error::Json(e) => write!(f, "json error: {e}"),
             Error::Parse { path, reason } => {
                 write!(f, "failed to parse {path}: {reason}")
+            }
+            Error::Unsupported(what) => write!(f, "unsupported: {what}"),
+            Error::SchemaMismatch { found, expected } => write!(
+                f,
+                "bundle schema version {found} is not supported (this build expects {expected})"
+            ),
