@@ -38,3 +38,9 @@ impl fmt::Display for Error {
     }
 }
 
+impl std::error::Error for Error {
+    fn source(&self) -> Option<&(dyn std::error::Error + 'static)> {
+        match self {
+            Error::Io(e) => Some(e),
+            Error::Json(e) => Some(e),
+            _ => None,
