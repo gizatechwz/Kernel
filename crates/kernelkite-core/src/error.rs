@@ -44,3 +44,9 @@ impl std::error::Error for Error {
             Error::Io(e) => Some(e),
             Error::Json(e) => Some(e),
             _ => None,
+        }
+    }
+}
+
+impl From<std::io::Error> for Error {
+    fn from(e: std::io::Error) -> Self {
