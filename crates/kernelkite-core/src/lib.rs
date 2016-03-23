@@ -43,3 +43,11 @@ pub mod proc_linux;
 #[cfg(not(target_os = "linux"))]
 pub mod proc_linux {
     use crate::error::{Error, Result};
+    use crate::model::{Backend, Frame};
+    use crate::sampler::{HostInfo, Sampler};
+
+    /// Mirrors the Linux filter type so callers compile unchanged.
+    #[derive(Debug, Clone)]
+    pub enum PidFilter {
+        All,
+        Subtree(i32),
