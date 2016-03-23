@@ -26,3 +26,11 @@
 //! [`error::Error::Unsupported`], so the whole crate builds on Windows and
 //! macOS while remaining honest about what it can observe there.
 
+pub mod bundle;
+pub mod compare;
+pub mod ebpf;
+pub mod error;
+pub mod fixture;
+pub mod model;
+pub mod runner;
+pub mod sampler;
