@@ -34,3 +34,12 @@ pub mod fixture;
 pub mod model;
 pub mod runner;
 pub mod sampler;
+
+#[cfg(target_os = "linux")]
+pub mod proc_linux;
+
+/// Non-Linux shim for the `/proc` backend so the crate compiles everywhere.
+/// The real implementation lives in the Linux-only module of the same name.
+#[cfg(not(target_os = "linux"))]
+pub mod proc_linux {
+    use crate::error::{Error, Result};
