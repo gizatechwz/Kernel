@@ -51,3 +51,12 @@ pub mod proc_linux {
     pub enum PidFilter {
         All,
         Subtree(i32),
+        Set(Vec<i32>),
+    }
+
+    /// Non-Linux stand-in for the `/proc` sampler. Construction succeeds so
+    /// code paths type-check, but sampling reports that `/proc` is absent.
+    pub struct ProcSampler {
+        host: HostInfo,
+    }
+
