@@ -60,3 +60,11 @@ pub mod proc_linux {
         host: HostInfo,
     }
 
+    impl ProcSampler {
+        pub fn new(_filter: PidFilter, _with_network: bool) -> Self {
+            ProcSampler {
+                host: HostInfo::default(),
+            }
+        }
+
+        pub fn rooted(
