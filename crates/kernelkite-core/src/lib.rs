@@ -68,3 +68,12 @@ pub mod proc_linux {
         }
 
         pub fn rooted(
+            _filter: PidFilter,
+            _with_network: bool,
+            _root: impl Into<std::path::PathBuf>,
+        ) -> Self {
+            ProcSampler {
+                host: HostInfo::default(),
+            }
+        }
+    }
