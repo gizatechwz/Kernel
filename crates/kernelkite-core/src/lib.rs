@@ -77,3 +77,11 @@ pub mod proc_linux {
             }
         }
     }
+
+    impl Sampler for ProcSampler {
+        fn backend(&self) -> Backend {
+            Backend::Proc
+        }
+
+        fn host_info(&self) -> HostInfo {
+            self.host
