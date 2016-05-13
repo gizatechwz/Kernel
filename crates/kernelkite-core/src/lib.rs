@@ -85,3 +85,12 @@ pub mod proc_linux {
 
         fn host_info(&self) -> HostInfo {
             self.host
+        }
+
+        fn sample(&mut self, _t_ms: u64) -> Result<Option<Frame>> {
+            Err(Error::Unsupported(
+                "the /proc backend requires Linux; use `fixture` replay on this OS".into(),
+            ))
+        }
+    }
+
