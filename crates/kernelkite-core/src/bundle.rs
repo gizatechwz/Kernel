@@ -4,3 +4,7 @@ use crate::error::{Error, Result};
 use crate::model::{ProfileBundle, BUNDLE_SCHEMA_VERSION};
 
 /// Serialize a bundle to pretty JSON. Field order is stable (struct order +
+/// `BTreeMap`), so the same in-memory bundle always yields identical bytes.
+pub fn to_json(bundle: &ProfileBundle) -> Result<String> {
+    Ok(serde_json::to_string_pretty(bundle)?)
+}
