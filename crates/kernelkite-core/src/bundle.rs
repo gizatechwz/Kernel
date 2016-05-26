@@ -8,3 +8,6 @@ use crate::model::{ProfileBundle, BUNDLE_SCHEMA_VERSION};
 pub fn to_json(bundle: &ProfileBundle) -> Result<String> {
     Ok(serde_json::to_string_pretty(bundle)?)
 }
+
+/// Parse a bundle from JSON, validating the schema version.
+pub fn from_json(raw: &str) -> Result<ProfileBundle> {
