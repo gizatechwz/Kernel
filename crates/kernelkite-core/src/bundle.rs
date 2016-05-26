@@ -18,3 +18,7 @@ pub fn from_json(raw: &str) -> Result<ProfileBundle> {
             expected: BUNDLE_SCHEMA_VERSION,
         });
     }
+    Ok(bundle)
+}
+
+/// Write a bundle to a file path.
