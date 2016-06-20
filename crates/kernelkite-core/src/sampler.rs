@@ -41,3 +41,8 @@ impl HostInfo {
         #[cfg(not(target_os = "linux"))]
         {
             HostInfo::default()
+        }
+    }
+}
+
+/// Something that can produce timeline frames.
