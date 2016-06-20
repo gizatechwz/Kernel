@@ -36,3 +36,8 @@ impl HostInfo {
     pub fn detect() -> Self {
         #[cfg(target_os = "linux")]
         {
+            crate::proc_linux::detect_host_info()
+        }
+        #[cfg(not(target_os = "linux"))]
+        {
+            HostInfo::default()
