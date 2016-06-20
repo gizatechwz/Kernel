@@ -14,3 +14,9 @@ use crate::model::{Backend, Frame};
 
 /// Host constants needed to interpret raw counters.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct HostInfo {
+    /// SC_CLK_TCK — clock ticks per second (usually 100 on Linux).
+    pub clock_ticks_per_sec: u64,
+    /// Memory page size in bytes.
+    pub page_size_bytes: u64,
+}
