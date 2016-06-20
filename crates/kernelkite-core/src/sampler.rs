@@ -25,3 +25,8 @@ impl Default for HostInfo {
     fn default() -> Self {
         HostInfo {
             clock_ticks_per_sec: 100,
+            page_size_bytes: 4096,
+        }
+    }
+}
+
