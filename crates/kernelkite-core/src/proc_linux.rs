@@ -117,3 +117,19 @@ impl ProcSampler {
                 .and_then(|v| v.parse().ok())
                 .ok_or_else(|| Error::Parse {
                     path: path.display().to_string(),
+                    reason: "missing vsize field".into(),
+                })?;
+        let rss_pages: u64 =
+            it.next()
+                .and_then(|v| v.parse().ok())
+                .ok_or_else(|| Error::Parse {
+                    path: path.display().to_string(),
+                    reason: "missing rss field".into(),
+                })?;
+        Ok((vsize_pages, rss_pages))
+    }
+
+    fn read_io(&self, pid: i32) -> Option<(u64, u64)> {
+        let path = self.root.join(pid.to_string()).join("io");
+        let raw = std::fs::read_to_string(path).ok()?;
+        parse_io(&raw)
