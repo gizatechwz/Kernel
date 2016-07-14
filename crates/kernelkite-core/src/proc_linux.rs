@@ -85,3 +85,19 @@ impl ProcSampler {
                 let mut keep = std::collections::BTreeSet::new();
                 keep.insert(*root);
                 // Iterate to a fixed point over the (small) pid set.
+                let mut changed = true;
+                while changed {
+                    changed = false;
+                    for (pid, ppid) in &ppid_of {
+                        if keep.contains(ppid) && keep.insert(*pid) {
+                            changed = true;
+                        }
+                    }
+                }
+                Ok(all.into_iter().filter(|p| keep.contains(p)).collect())
+            }
+        }
+    }
+
+    fn read_stat(&self, pid: i32) -> Result<StatFields> {
+        let path = self.root.join(pid.to_string()).join("stat");
