@@ -54,3 +54,19 @@ impl ProcSampler {
             root: root.into(),
         }
     }
+
+    fn list_pids(&self) -> Result<Vec<i32>> {
+        let mut pids = Vec::new();
+        for entry in std::fs::read_dir(&self.root)? {
+            let entry = entry?;
+            if let Some(name) = entry.file_name().to_str() {
+                if let Ok(pid) = name.parse::<i32>() {
+                    pids.push(pid);
+                }
+            }
+        }
+        pids.sort_unstable();
+        Ok(pids)
+    }
+
+    fn selected_pids(&self) -> Result<Vec<i32>> {
