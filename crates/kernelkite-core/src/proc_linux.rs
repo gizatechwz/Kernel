@@ -101,3 +101,19 @@ impl ProcSampler {
 
     fn read_stat(&self, pid: i32) -> Result<StatFields> {
         let path = self.root.join(pid.to_string()).join("stat");
+        let raw = std::fs::read_to_string(&path)?;
+        parse_stat(&raw).ok_or_else(|| Error::Parse {
+            path: path.display().to_string(),
+            reason: "unexpected /proc/<pid>/stat layout".into(),
+        })
+    }
+
+    fn read_statm_rss_pages(&self, pid: i32) -> Result<(u64, u64)> {
+        let path = self.root.join(pid.to_string()).join("statm");
+        let raw = std::fs::read_to_string(&path)?;
+        let mut it = raw.split_whitespace();
+        let vsize_pages: u64 =
+            it.next()
+                .and_then(|v| v.parse().ok())
+                .ok_or_else(|| Error::Parse {
+                    path: path.display().to_string(),
