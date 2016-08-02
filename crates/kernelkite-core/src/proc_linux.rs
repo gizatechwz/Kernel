@@ -133,3 +133,19 @@ impl ProcSampler {
         let path = self.root.join(pid.to_string()).join("io");
         let raw = std::fs::read_to_string(path).ok()?;
         parse_io(&raw)
+    }
+
+    fn read_fd_count(&self, pid: i32) -> Option<u32> {
+        let path = self.root.join(pid.to_string()).join("fd");
+        let count = std::fs::read_dir(path).ok()?.count();
+        Some(count as u32)
+    }
+
+    fn read_network(&self) -> Option<NetworkSummary> {
+        let path = self.root.join("net").join("dev");
+        let raw = std::fs::read_to_string(path).ok()?;
+        parse_net_dev(&raw)
+    }
+}
+
+impl Sampler for ProcSampler {
