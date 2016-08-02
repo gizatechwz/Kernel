@@ -149,3 +149,19 @@ impl ProcSampler {
 }
 
 impl Sampler for ProcSampler {
+    fn backend(&self) -> Backend {
+        Backend::Proc
+    }
+
+    fn host_info(&self) -> HostInfo {
+        self.host
+    }
+
+    fn sample(&mut self, t_ms: u64) -> Result<Option<Frame>> {
+        let mut frame = Frame::new(t_ms);
+        for pid in self.selected_pids()? {
+            // A process may vanish between listing and reading; skip races.
+            let stat = match self.read_stat(pid) {
+                Ok(s) => s,
+                Err(Error::Io(_)) => continue,
+                Err(e) => return Err(e),
