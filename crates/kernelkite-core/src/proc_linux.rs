@@ -165,3 +165,18 @@ impl Sampler for ProcSampler {
                 Ok(s) => s,
                 Err(Error::Io(_)) => continue,
                 Err(e) => return Err(e),
+            };
+            let (vsize_pages, rss_pages) = match self.read_statm_rss_pages(pid) {
+                Ok(v) => v,
+                Err(Error::Io(_)) => continue,
+                Err(e) => return Err(e),
+            };
+            let io = self.read_io(pid);
+            let open_fds = self.read_fd_count(pid);
+            frame.insert(ProcessSample {
+                pid,
+                ppid: stat.ppid,
+                comm: stat.comm,
+                utime_ticks: stat.utime,
+                stime_ticks: stat.stime,
+                rss_bytes: rss_pages.saturating_mul(self.host.page_size_bytes),
