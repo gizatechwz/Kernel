@@ -180,3 +180,19 @@ impl Sampler for ProcSampler {
                 utime_ticks: stat.utime,
                 stime_ticks: stat.stime,
                 rss_bytes: rss_pages.saturating_mul(self.host.page_size_bytes),
+                vsize_bytes: vsize_pages.saturating_mul(self.host.page_size_bytes),
+                threads: stat.num_threads.max(0) as u32,
+                read_bytes: io.map(|(r, _)| r),
+                write_bytes: io.map(|(_, w)| w),
+                open_fds,
+            });
+        }
+        if self.with_network {
+            frame.network = self.read_network();
+        }
+        Ok(Some(frame))
+    }
+}
+
+/// Fields extracted from `/proc/<pid>/stat`.
+#[derive(Debug, Clone, PartialEq, Eq)]
