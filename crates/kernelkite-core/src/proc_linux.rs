@@ -196,3 +196,19 @@ impl Sampler for ProcSampler {
 
 /// Fields extracted from `/proc/<pid>/stat`.
 #[derive(Debug, Clone, PartialEq, Eq)]
+pub struct StatFields {
+    pub ppid: i32,
+    pub comm: String,
+    pub utime: u64,
+    pub stime: u64,
+    pub num_threads: i64,
+}
+
+/// Parse a `/proc/<pid>/stat` line.
+///
+/// The tricky part of this format is `comm`: it is wrapped in parentheses and
+/// may itself contain spaces or parentheses (e.g. `(foo (bar) baz)`). We locate
+/// the last `)` to end the comm, then split the remaining space-separated
+/// fields by their documented positional index (see `proc(5)`).
+pub fn parse_stat(raw: &str) -> Option<StatFields> {
+    let open = raw.find('(')?;
