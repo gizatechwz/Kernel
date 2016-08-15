@@ -212,3 +212,19 @@ pub struct StatFields {
 /// fields by their documented positional index (see `proc(5)`).
 pub fn parse_stat(raw: &str) -> Option<StatFields> {
     let open = raw.find('(')?;
+    let close = raw.rfind(')')?;
+    if close <= open {
+        return None;
+    }
+    let comm = raw[open + 1..close].to_string();
+    // Fields after comm start at position 3 in proc(5) numbering (state = 3).
+    // The rest split cleanly on whitespace.
+    let rest: Vec<&str> = raw[close + 1..].split_whitespace().collect();
+    // rest[0] = state, rest[1] = ppid, rest[11] = utime, rest[12] = stime,
+    // rest[17] = num_threads (0-based indices after comm).
+    let ppid = rest.get(1)?.parse().ok()?;
+    let utime = rest.get(11)?.parse().ok()?;
+    let stime = rest.get(12)?.parse().ok()?;
+    let num_threads = rest.get(17)?.parse().ok()?;
+    Some(StatFields {
+        ppid,
