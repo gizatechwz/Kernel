@@ -228,3 +228,19 @@ pub fn parse_stat(raw: &str) -> Option<StatFields> {
     let num_threads = rest.get(17)?.parse().ok()?;
     Some(StatFields {
         ppid,
+        comm,
+        utime,
+        stime,
+        num_threads,
+    })
+}
+
+/// Parse `/proc/<pid>/io`, returning `(read_bytes, write_bytes)`.
+///
+/// We prefer `read_bytes` / `write_bytes` (actual storage-layer transfer) over
+/// `rchar` / `wchar` (which count syscall bytes including cache hits).
+pub fn parse_io(raw: &str) -> Option<(u64, u64)> {
+    let mut read_bytes = None;
+    let mut write_bytes = None;
+    for line in raw.lines() {
+        let mut it = line.split_whitespace();
