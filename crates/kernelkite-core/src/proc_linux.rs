@@ -244,3 +244,18 @@ pub fn parse_io(raw: &str) -> Option<(u64, u64)> {
     let mut write_bytes = None;
     for line in raw.lines() {
         let mut it = line.split_whitespace();
+        match it.next() {
+            Some("read_bytes:") => read_bytes = it.next().and_then(|v| v.parse().ok()),
+            Some("write_bytes:") => write_bytes = it.next().and_then(|v| v.parse().ok()),
+            _ => {}
+        }
+    }
+    Some((read_bytes?, write_bytes?))
+}
+
+/// Parse `/proc/net/dev` into a host-wide [`NetworkSummary`]. The loopback
+/// interface is excluded so the summary reflects off-host traffic.
+pub fn parse_net_dev(raw: &str) -> Option<NetworkSummary> {
+    let mut rx_total = 0u64;
+    let mut tx_total = 0u64;
+    let mut interfaces = Vec::new();
