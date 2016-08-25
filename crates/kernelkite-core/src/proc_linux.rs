@@ -275,3 +275,19 @@ pub fn parse_net_dev(raw: &str) -> Option<NetworkSummary> {
         tx_total = tx_total.saturating_add(tx);
         interfaces.push(name.to_string());
     }
+    if interfaces.is_empty() {
+        return None;
+    }
+    interfaces.sort();
+    Some(NetworkSummary {
+        rx_bytes: rx_total,
+        tx_bytes: tx_total,
+        interfaces,
+    })
+}
+
+/// Detect host constants from the running Linux system.
+pub fn detect_host_info() -> HostInfo {
+    // SAFETY: sysconf is a pure, thread-safe libc query with no side effects.
+    let clk = unsafe { sysconf(SC_CLK_TCK) };
+    let page = unsafe { sysconf(SC_PAGESIZE) };
