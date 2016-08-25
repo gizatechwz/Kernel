@@ -259,3 +259,19 @@ pub fn parse_net_dev(raw: &str) -> Option<NetworkSummary> {
     let mut rx_total = 0u64;
     let mut tx_total = 0u64;
     let mut interfaces = Vec::new();
+    for line in raw.lines() {
+        let Some((name, rest)) = line.split_once(':') else {
+            continue; // header lines have no colon
+        };
+        let name = name.trim();
+        if name == "lo" || name.is_empty() {
+            continue;
+        }
+        let cols: Vec<&str> = rest.split_whitespace().collect();
+        // Column 0 = rx bytes, column 8 = tx bytes (see /proc/net/dev layout).
+        let rx: u64 = cols.first().and_then(|v| v.parse().ok())?;
+        let tx: u64 = cols.get(8).and_then(|v| v.parse().ok())?;
+        rx_total = rx_total.saturating_add(rx);
+        tx_total = tx_total.saturating_add(tx);
+        interfaces.push(name.to_string());
+    }
