@@ -307,3 +307,19 @@ extern "C" {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
+    use crate::sampler::Sampler;
+
+    #[test]
+    fn parse_stat_handles_spaces_and_parens_in_comm() {
+        // comm = "(weird cmd)" containing spaces and inner parentheses.
+        // Layout: pid (comm) state ppid pgrp ... utime(14th) stime(15th) ... threads(20th)
+        // proc(5) fields 1..=52; here we only need up to num_threads (field 20).
+        let raw = "1234 ((weird cmd)) S 1000 1234 1234 0 -1 4194304 \
+                   100 200 0 0 4200 1800 0 0 20 0 7 0 \
+                   1500 1000000 512 18446744073709551615 1 1 0 0 0 0 0";
+        let s = parse_stat(raw).expect("should parse");
+        assert_eq!(s.comm, "(weird cmd)");
+        assert_eq!(s.ppid, 1000);
+        assert_eq!(s.utime, 4200);
+        assert_eq!(s.stime, 1800);
