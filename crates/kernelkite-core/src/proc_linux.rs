@@ -291,3 +291,19 @@ pub fn detect_host_info() -> HostInfo {
     // SAFETY: sysconf is a pure, thread-safe libc query with no side effects.
     let clk = unsafe { sysconf(SC_CLK_TCK) };
     let page = unsafe { sysconf(SC_PAGESIZE) };
+    HostInfo {
+        clock_ticks_per_sec: if clk > 0 { clk as u64 } else { 100 },
+        page_size_bytes: if page > 0 { page as u64 } else { 4096 },
+    }
+}
+
+// Minimal libc bindings so the core has no external C-binding dependency.
+const SC_CLK_TCK: i32 = 2;
+const SC_PAGESIZE: i32 = 30;
+
+extern "C" {
+    fn sysconf(name: i32) -> i64;
+}
+
+#[cfg(test)]
+mod tests {
