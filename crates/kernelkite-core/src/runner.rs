@@ -42,3 +42,13 @@ fn now_unix_secs() -> Option<u64> {
         .duration_since(std::time::UNIX_EPOCH)
         .ok()
         .map(|d| d.as_secs())
+}
+
+fn base_meta(sampler: &dyn Sampler, opts: &CaptureOptions) -> CaptureMeta {
+    let host = sampler.host_info();
+    CaptureMeta {
+        schema_version: BUNDLE_SCHEMA_VERSION,
+        backend: sampler.backend(),
+        label: opts.label.clone(),
+        command: None,
+        clock_ticks_per_sec: host.clock_ticks_per_sec,
