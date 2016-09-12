@@ -22,3 +22,13 @@ pub struct CaptureOptions {
     /// Maximum number of frames to collect (safety bound for `capture`).
     pub max_frames: usize,
     /// Record wall-clock start time in the bundle metadata. Disable for
+    /// deterministic fixtures.
+    pub record_wall_clock: bool,
+}
+
+impl Default for CaptureOptions {
+    fn default() -> Self {
+        CaptureOptions {
+            label: "capture".into(),
+            interval_ms: 100,
+            max_frames: 100,
