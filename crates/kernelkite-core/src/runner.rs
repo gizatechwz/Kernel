@@ -52,3 +52,13 @@ fn base_meta(sampler: &dyn Sampler, opts: &CaptureOptions) -> CaptureMeta {
         label: opts.label.clone(),
         command: None,
         clock_ticks_per_sec: host.clock_ticks_per_sec,
+        page_size_bytes: host.page_size_bytes,
+        interval_ms: opts.interval_ms,
+        started_unix_secs: if opts.record_wall_clock {
+            now_unix_secs()
+        } else {
+            None
+        },
+        host_os: std::env::consts::OS.to_string(),
+        exit_code: None,
+    }
