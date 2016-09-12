@@ -338,3 +338,19 @@ mod tests {
         let raw = "Inter-|   Receive                    |  Transmit\n\
                    face |bytes packets errs drop fifo frame compressed multicast|bytes packets\n\
                    lo:  1000 10 0 0 0 0 0 0 1000 10 0 0 0 0 0 0\n\
+                   eth0:  5000 50 0 0 0 0 0 0 3000 30 0 0 0 0 0 0\n\
+                   wlan0: 2000 20 0 0 0 0 0 0 1500 15 0 0 0 0 0 0\n";
+        let n = parse_net_dev(raw).expect("summary");
+        assert_eq!(n.rx_bytes, 7000); // 5000 + 2000, loopback excluded
+        assert_eq!(n.tx_bytes, 4500); // 3000 + 1500
+        assert_eq!(n.interfaces, vec!["eth0".to_string(), "wlan0".to_string()]);
+    }
+
+    /// Build a synthetic procfs tree and drive `ProcSampler` over it. This runs
+    /// the entire /proc read path without needing real processes and works on
+    /// the Linux CI runner.
+    #[test]
+    fn proc_sampler_reads_synthetic_tree() {
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+
