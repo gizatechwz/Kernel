@@ -323,3 +323,18 @@ mod tests {
         assert_eq!(s.ppid, 1000);
         assert_eq!(s.utime, 4200);
         assert_eq!(s.stime, 1800);
+        assert_eq!(s.num_threads, 7);
+    }
+
+    #[test]
+    fn parse_io_prefers_storage_bytes() {
+        let raw = "rchar: 999\nwchar: 888\nsyscr: 7\nsyscw: 8\n\
+                   read_bytes: 4096\nwrite_bytes: 8192\ncancelled_write_bytes: 0\n";
+        assert_eq!(parse_io(raw), Some((4096, 8192)));
+    }
+
+    #[test]
+    fn parse_net_dev_sums_non_loopback() {
+        let raw = "Inter-|   Receive                    |  Transmit\n\
+                   face |bytes packets errs drop fifo frame compressed multicast|bytes packets\n\
+                   lo:  1000 10 0 0 0 0 0 0 1000 10 0 0 0 0 0 0\n\
