@@ -12,3 +12,13 @@ use crate::model::{Backend, CaptureMeta, ProfileBundle, BUNDLE_SCHEMA_VERSION};
 use crate::sampler::Sampler;
 use std::time::{Duration, Instant};
 
+/// Options controlling a capture session.
+#[derive(Debug, Clone)]
+pub struct CaptureOptions {
+    /// Human label stored in the bundle (e.g. "before").
+    pub label: String,
+    /// Milliseconds between frames.
+    pub interval_ms: u64,
+    /// Maximum number of frames to collect (safety bound for `capture`).
+    pub max_frames: usize,
+    /// Record wall-clock start time in the bundle metadata. Disable for
