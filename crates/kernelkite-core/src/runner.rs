@@ -83,3 +83,13 @@ pub fn capture(mut sampler: impl Sampler, opts: &CaptureOptions) -> Result<Profi
         } else {
             start.elapsed().as_millis() as u64
         };
+        match sampler.sample(t_ms)? {
+            Some(frame) => frames.push(frame),
+            None => break,
+        }
+        if !is_fixture && i + 1 < opts.max_frames {
+            std::thread::sleep(Duration::from_millis(opts.interval_ms));
+        }
+    }
+
+    Ok(ProfileBundle { meta, frames })
