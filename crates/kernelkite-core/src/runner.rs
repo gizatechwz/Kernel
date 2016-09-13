@@ -72,3 +72,14 @@ fn base_meta(sampler: &dyn Sampler, opts: &CaptureOptions) -> CaptureMeta {
 pub fn capture(mut sampler: impl Sampler, opts: &CaptureOptions) -> Result<ProfileBundle> {
     let meta = base_meta(&sampler, opts);
     let is_fixture = sampler.backend() == Backend::Fixture;
+    let mut frames = Vec::new();
+    let start = Instant::now();
+
+    for i in 0..opts.max_frames {
+        let t_ms = if is_fixture {
+            // Fixture replay ignores the hint; use index-derived time only as
+            // a fallback for empty timestamps.
+            (i as u64) * opts.interval_ms
+        } else {
+            start.elapsed().as_millis() as u64
+        };
