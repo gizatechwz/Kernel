@@ -93,3 +93,13 @@ pub fn capture(mut sampler: impl Sampler, opts: &CaptureOptions) -> Result<Profi
     }
 
     Ok(ProfileBundle { meta, frames })
+}
+
+/// Spawn `command`, profile it with `sampler` until it exits, and return the
+/// bundle including the child's exit code.
+///
+/// The sampler is expected to already be scoped to the interesting pids (for
+/// example a `PidFilter::Subtree` rooted at the child). The child pid is
+/// returned to the caller via `on_spawn` so a Linux caller can build such a
+/// subtree filter *after* the fork.
+pub fn run_and_profile<S, F>(
