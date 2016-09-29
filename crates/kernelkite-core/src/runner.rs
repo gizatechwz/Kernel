@@ -113,3 +113,13 @@ where
 {
     if command.is_empty() {
         return Err(crate::error::Error::Invalid("empty command".into()));
+    }
+    let mut child = std::process::Command::new(&command[0])
+        .args(&command[1..])
+        .spawn()?;
+    let child_pid = child.id();
+
+    let mut sampler = make_sampler(child_pid)?;
+    let mut meta = base_meta(&sampler, opts);
+    meta.command = Some(command.to_vec());
+
