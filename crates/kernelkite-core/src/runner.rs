@@ -103,3 +103,13 @@ pub fn capture(mut sampler: impl Sampler, opts: &CaptureOptions) -> Result<Profi
 /// returned to the caller via `on_spawn` so a Linux caller can build such a
 /// subtree filter *after* the fork.
 pub fn run_and_profile<S, F>(
+    command: &[String],
+    mut make_sampler: F,
+    opts: &CaptureOptions,
+) -> Result<ProfileBundle>
+where
+    S: Sampler,
+    F: FnMut(u32) -> Result<S>,
+{
+    if command.is_empty() {
+        return Err(crate::error::Error::Invalid("empty command".into()));
