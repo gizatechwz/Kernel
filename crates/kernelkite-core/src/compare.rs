@@ -60,3 +60,17 @@ pub fn summarize(bundle: &ProfileBundle) -> Summary {
     for frame in &bundle.frames {
         let mut frame_rss = 0u64;
         for s in frame.processes.values() {
+            frame_rss = frame_rss.saturating_add(s.rss_bytes);
+            let cpu = s.utime_ticks + s.stime_ticks;
+            let t = tracks.entry(s.pid).or_default();
+            if t.first_cpu.is_none() {
+                t.first_cpu = Some(cpu);
+            }
+            t.last_cpu = cpu;
+            if let (Some(r), Some(w)) = (s.read_bytes, s.write_bytes) {
+                t.saw_io = true;
+                if t.first_read.is_none() {
+                    t.first_read = Some(r);
+                }
+                t.last_read = r;
+                if t.first_write.is_none() {
