@@ -74,3 +74,17 @@ pub fn summarize(bundle: &ProfileBundle) -> Summary {
                 }
                 t.last_read = r;
                 if t.first_write.is_none() {
+                    t.first_write = Some(w);
+                }
+                t.last_write = w;
+            }
+        }
+        peak_rss = peak_rss.max(frame_rss);
+        if let Some(n) = &frame.network {
+            if first_net.is_none() {
+                first_net = Some((n.rx_bytes, n.tx_bytes));
+            }
+            last_net = Some((n.rx_bytes, n.tx_bytes));
+        }
+    }
+
