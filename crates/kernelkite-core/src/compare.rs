@@ -32,3 +32,17 @@ pub struct Summary {
     /// Net off-host bytes received during the timeline, if network was sampled.
     pub net_rx_bytes: Option<u64>,
     /// Net off-host bytes transmitted during the timeline, if sampled.
+    pub net_tx_bytes: Option<u64>,
+}
+
+/// First and last observation of a pid's cumulative counters.
+#[derive(Default, Clone, Copy)]
+struct Track {
+    first_cpu: Option<u64>,
+    last_cpu: u64,
+    first_read: Option<u64>,
+    last_read: u64,
+    first_write: Option<u64>,
+    last_write: u64,
+    saw_io: bool,
+}
