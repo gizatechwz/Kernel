@@ -46,3 +46,17 @@ struct Track {
     last_write: u64,
     saw_io: bool,
 }
+
+/// Compute the derived [`Summary`] for a bundle.
+pub fn summarize(bundle: &ProfileBundle) -> Summary {
+    let ticks_per_sec = bundle.meta.clock_ticks_per_sec.max(1) as f64;
+    let mut tracks: std::collections::BTreeMap<i32, Track> = std::collections::BTreeMap::new();
+    let mut peak_rss = 0u64;
+
+    // Network: cumulative counters, so take last - first of the summed totals.
+    let mut first_net: Option<(u64, u64)> = None;
+    let mut last_net: Option<(u64, u64)> = None;
+
+    for frame in &bundle.frames {
+        let mut frame_rss = 0u64;
+        for s in frame.processes.values() {
