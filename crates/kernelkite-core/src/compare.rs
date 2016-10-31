@@ -18,3 +18,17 @@ pub struct Summary {
     /// Number of frames captured.
     pub frames: usize,
     /// Distinct processes observed over the whole timeline.
+    pub distinct_pids: usize,
+    /// Total CPU seconds (user + system) consumed across all processes,
+    /// measured as the summed increase in CPU ticks from first to last time
+    /// each pid was seen, divided by the host tick rate.
+    pub cpu_seconds: f64,
+    /// Peak total resident memory across processes in any single frame (bytes).
+    pub peak_rss_bytes: u64,
+    /// Total bytes read (delta of cumulative counters), if I/O was recorded.
+    pub read_bytes: Option<u64>,
+    /// Total bytes written (delta of cumulative counters), if I/O was recorded.
+    pub write_bytes: Option<u64>,
+    /// Net off-host bytes received during the timeline, if network was sampled.
+    pub net_rx_bytes: Option<u64>,
+    /// Net off-host bytes transmitted during the timeline, if sampled.
