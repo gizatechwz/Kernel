@@ -88,3 +88,17 @@ pub fn summarize(bundle: &ProfileBundle) -> Summary {
         }
     }
 
+    let mut cpu_ticks = 0u64;
+    let mut read_total = 0u64;
+    let mut write_total = 0u64;
+    let mut any_io = false;
+    for t in tracks.values() {
+        if let Some(first) = t.first_cpu {
+            cpu_ticks = cpu_ticks.saturating_add(t.last_cpu.saturating_sub(first));
+        }
+        if t.saw_io {
+            any_io = true;
+            if let Some(fr) = t.first_read {
+                read_total = read_total.saturating_add(t.last_read.saturating_sub(fr));
+            }
+            if let Some(fw) = t.first_write {
