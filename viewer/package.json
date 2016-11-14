@@ -1,0 +1,27 @@
+{
+  "name": "@kernelkite/viewer",
+  "version": "0.1.0",
+  "description": "TypeScript timeline viewer for kernelkite profile bundles",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "kernelkite-render": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test dist/model.test.js dist/timeline.test.js",
+    "render": "node dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.1"
+  }
