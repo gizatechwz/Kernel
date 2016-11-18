@@ -143,3 +143,17 @@ pub struct Delta {
 impl Delta {
     fn new(metric: &str, before: f64, after: f64) -> Self {
         let abs = after - before;
+        let pct = if before.abs() > f64::EPSILON {
+            Some(abs / before * 100.0)
+        } else {
+            None
+        };
+        Delta {
+            metric: metric.to_string(),
+            before,
+            after,
+            abs_change: abs,
+            pct_change: pct,
+        }
+    }
+}
