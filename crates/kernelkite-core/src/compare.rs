@@ -129,3 +129,17 @@ pub fn summarize(bundle: &ProfileBundle) -> Summary {
     }
 }
 
+/// A single before/after metric delta.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Delta {
+    pub metric: String,
+    pub before: f64,
+    pub after: f64,
+    pub abs_change: f64,
+    /// Percentage change relative to `before`. `None` when `before` is zero.
+    pub pct_change: Option<f64>,
+}
+
+impl Delta {
+    fn new(metric: &str, before: f64, after: f64) -> Self {
+        let abs = after - before;
