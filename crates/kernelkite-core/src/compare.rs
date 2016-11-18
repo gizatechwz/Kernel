@@ -115,3 +115,17 @@ pub fn summarize(bundle: &ProfileBundle) -> Summary {
     };
 
     Summary {
+        label: bundle.meta.label.clone(),
+        backend: bundle.meta.backend.as_str().to_string(),
+        duration_ms: bundle.duration_ms(),
+        frames: bundle.frames.len(),
+        distinct_pids: tracks.len(),
+        cpu_seconds: cpu_ticks as f64 / ticks_per_sec,
+        peak_rss_bytes: peak_rss,
+        read_bytes: if any_io { Some(read_total) } else { None },
+        write_bytes: if any_io { Some(write_total) } else { None },
+        net_rx_bytes: net_rx,
+        net_tx_bytes: net_tx,
+    }
+}
+
