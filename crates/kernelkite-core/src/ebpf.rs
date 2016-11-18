@@ -10,3 +10,10 @@
 //! `ebpf` cargo feature is enabled, and even then it does no kernel work.
 
 use crate::error::{Error, Result};
+use crate::model::{Backend, Frame};
+use crate::sampler::{HostInfo, Sampler};
+
+/// Placeholder sampler for the future eBPF backend. Constructing it succeeds,
+/// but sampling always fails with a clear "not implemented" error.
+pub struct EbpfSampler {
+    host: HostInfo,
