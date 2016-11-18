@@ -102,3 +102,16 @@ pub fn summarize(bundle: &ProfileBundle) -> Summary {
                 read_total = read_total.saturating_add(t.last_read.saturating_sub(fr));
             }
             if let Some(fw) = t.first_write {
+                write_total = write_total.saturating_add(t.last_write.saturating_sub(fw));
+            }
+        }
+    }
+
+    let (net_rx, net_tx) = match (first_net, last_net) {
+        (Some((rx0, tx0)), Some((rx1, tx1))) => {
+            (Some(rx1.saturating_sub(rx0)), Some(tx1.saturating_sub(tx0)))
+        }
+        _ => (None, None),
+    };
+
+    Summary {
