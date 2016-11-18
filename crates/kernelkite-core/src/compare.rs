@@ -157,3 +157,17 @@ impl Delta {
         }
     }
 }
+
+/// Full before/after comparison report.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Comparison {
+    pub before: Summary,
+    pub after: Summary,
+    pub deltas: Vec<Delta>,
+}
+
+/// Compare two bundles and produce a deterministic list of deltas.
+pub fn compare(before: &ProfileBundle, after: &ProfileBundle) -> Comparison {
+    let b = summarize(before);
+    let a = summarize(after);
+    let mut deltas = vec![
