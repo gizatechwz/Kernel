@@ -17,3 +17,11 @@ use crate::sampler::{HostInfo, Sampler};
 /// but sampling always fails with a clear "not implemented" error.
 pub struct EbpfSampler {
     host: HostInfo,
+}
+
+impl EbpfSampler {
+    /// Create the stub. This intentionally performs no BPF program loading.
+    pub fn new() -> Self {
+        EbpfSampler {
+            host: HostInfo::detect(),
+        }
