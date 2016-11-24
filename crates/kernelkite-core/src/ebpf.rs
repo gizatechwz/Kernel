@@ -32,3 +32,10 @@ impl Default for EbpfSampler {
     fn default() -> Self {
         Self::new()
     }
+}
+
+impl Sampler for EbpfSampler {
+    fn backend(&self) -> Backend {
+        Backend::Ebpf
+    }
+
