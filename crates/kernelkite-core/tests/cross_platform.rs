@@ -28,3 +28,16 @@ fn make_bundle(label: &str, cpu_end: u64, rss: u64) -> ProfileBundle {
         let mut f = Frame::new(i as u64 * 100);
         f.insert(sample(1000, 1, "make", *cpu, rss));
         f.insert(sample(1001, 1000, "cc1", cpu / 2, rss / 2));
+        frames.push(f);
+    }
+    ProfileBundle {
+        meta: CaptureMeta {
+            schema_version: BUNDLE_SCHEMA_VERSION,
+            backend: Backend::Fixture,
+            label: label.into(),
+            command: Some(vec!["make".into()]),
+            clock_ticks_per_sec: 100,
+            page_size_bytes: 4096,
+            interval_ms: 100,
+            started_unix_secs: None,
+            host_os: "test".into(),
