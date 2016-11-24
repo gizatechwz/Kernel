@@ -25,3 +25,10 @@ impl EbpfSampler {
         EbpfSampler {
             host: HostInfo::detect(),
         }
+    }
+}
+
+impl Default for EbpfSampler {
+    fn default() -> Self {
+        Self::new()
+    }
