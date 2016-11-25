@@ -41,3 +41,16 @@ fn make_bundle(label: &str, cpu_end: u64, rss: u64) -> ProfileBundle {
             interval_ms: 100,
             started_unix_secs: None,
             host_os: "test".into(),
+            exit_code: Some(0),
+        },
+        frames,
+    }
+}
+
+#[test]
+fn bundle_json_roundtrip_is_stable() {
+    let b = make_bundle("before", 200, 4096 * 100);
+    let json1 = kk::to_json(&b).unwrap();
+    let parsed = kk::from_json(&json1).unwrap();
+    let json2 = kk::to_json(&parsed).unwrap();
+    assert_eq!(json1, json2, "serialization must be deterministic");
