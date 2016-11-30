@@ -67,3 +67,16 @@ fn schema_mismatch_is_rejected() {
         kk::Error::SchemaMismatch { found, expected } => {
             assert_eq!(found, 999);
             assert_eq!(expected, BUNDLE_SCHEMA_VERSION);
+        }
+        other => panic!("expected SchemaMismatch, got {other:?}"),
+    }
+}
+
+#[test]
+fn summarize_computes_cpu_and_io_deltas() {
+    let b = make_bundle("run", 200, 4096 * 100);
+    let s = kk::summarize(&b);
+    // pid 1000 cpu 0->200 ticks = 200; pid 1001 0->100 = 100; total 300 ticks.
+    // at 100 ticks/sec that is 3.0 cpu seconds.
+    assert!((s.cpu_seconds - 3.0).abs() < 1e-9, "cpu={}", s.cpu_seconds);
+    assert_eq!(s.distinct_pids, 2);
