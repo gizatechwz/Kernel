@@ -93,3 +93,16 @@ fn compare_reports_expected_direction() {
     let after = make_bundle("after", 200, 4096 * 100);
     let cmp = kk::compare(&before, &after);
     let cpu = cmp
+        .deltas
+        .iter()
+        .find(|d| d.metric == "cpu_seconds")
+        .unwrap();
+    assert!(cpu.after < cpu.before, "after should be faster");
+    assert!(cpu.abs_change < 0.0);
+    assert!(cpu.pct_change.unwrap() < 0.0);
+}
+
+#[test]
+fn fixture_replay_is_deterministic() {
+    let fixture = kk::Fixture {
+        clock_ticks_per_sec: 100,
