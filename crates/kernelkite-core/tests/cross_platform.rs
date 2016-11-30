@@ -54,3 +54,16 @@ fn bundle_json_roundtrip_is_stable() {
     let parsed = kk::from_json(&json1).unwrap();
     let json2 = kk::to_json(&parsed).unwrap();
     assert_eq!(json1, json2, "serialization must be deterministic");
+    assert_eq!(b, parsed);
+}
+
+#[test]
+fn schema_mismatch_is_rejected() {
+    let mut b = make_bundle("x", 100, 4096);
+    b.meta.schema_version = 999;
+    let json = kk::to_json(&b).unwrap();
+    let err = kk::from_json(&json).unwrap_err();
+    match err {
+        kk::Error::SchemaMismatch { found, expected } => {
+            assert_eq!(found, 999);
+            assert_eq!(expected, BUNDLE_SCHEMA_VERSION);
