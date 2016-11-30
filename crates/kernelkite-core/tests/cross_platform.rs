@@ -119,3 +119,16 @@ fn fixture_replay_is_deterministic() {
     };
     let json = serde_json::to_string(&fixture).unwrap();
 
+    // Replaying the same fixture twice yields identical bundles.
+    let run_once = || {
+        let fx = kk::Fixture::from_json(&json).unwrap();
+        let sampler = kk::FixtureSampler::new(fx);
+        let opts = kk::CaptureOptions {
+            label: "replay".into(),
+            interval_ms: 50,
+            max_frames: 1000,
+            record_wall_clock: false,
+        };
+        kk::capture(sampler, &opts).unwrap()
+    };
+    let a = run_once();
