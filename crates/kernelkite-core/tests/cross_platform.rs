@@ -80,3 +80,16 @@ fn summarize_computes_cpu_and_io_deltas() {
     // at 100 ticks/sec that is 3.0 cpu seconds.
     assert!((s.cpu_seconds - 3.0).abs() < 1e-9, "cpu={}", s.cpu_seconds);
     assert_eq!(s.distinct_pids, 2);
+    assert_eq!(s.frames, 3);
+    assert_eq!(s.duration_ms, 200);
+    // read_bytes = cpu*10 delta: pid1000 (2000-0)+ pid1001 (1000-0) = 3000.
+    assert_eq!(s.read_bytes, Some(3000));
+    assert_eq!(s.write_bytes, Some(600));
+}
+
+#[test]
+fn compare_reports_expected_direction() {
+    let before = make_bundle("before", 400, 4096 * 200);
+    let after = make_bundle("after", 200, 4096 * 100);
+    let cmp = kk::compare(&before, &after);
+    let cpu = cmp
