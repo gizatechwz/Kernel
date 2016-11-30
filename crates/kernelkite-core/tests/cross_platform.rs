@@ -106,3 +106,16 @@ fn compare_reports_expected_direction() {
 fn fixture_replay_is_deterministic() {
     let fixture = kk::Fixture {
         clock_ticks_per_sec: 100,
+        page_size_bytes: 4096,
+        frames: {
+            let mut v = Vec::new();
+            for i in 0..4u64 {
+                let mut f = Frame::new(i * 50);
+                f.insert(sample(42, 1, "cargo", i * 25, 1_000_000));
+                v.push(f);
+            }
+            v
+        },
+    };
+    let json = serde_json::to_string(&fixture).unwrap();
+
