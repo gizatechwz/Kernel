@@ -18,3 +18,17 @@ COMMANDS:
     version                                Show version.
 
 GLOBAL FLAGS:
+    --interval-ms <N>   Sampling interval in milliseconds (default 100).
+    --max-frames <N>    Maximum frames to capture (default 100).
+    --label <TEXT>      Label stored in the bundle (default per command).
+    --network           Include a host-wide network summary (Linux /proc).
+    --json              Emit machine-readable JSON where supported.
+
+NOTES:
+    The /proc backend is implemented and Linux-only. On other platforms use
+    `replay` with a fixture. An eBPF backend is planned but NOT implemented;
+    kernelkite never fabricates eBPF data.
+";
+
+/// Parsed command-line invocation.
+#[derive(Debug, Clone)]
