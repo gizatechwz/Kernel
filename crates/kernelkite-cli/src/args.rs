@@ -32,3 +32,17 @@ NOTES:
 
 /// Parsed command-line invocation.
 #[derive(Debug, Clone)]
+pub struct Cli {
+    pub interval_ms: u64,
+    pub max_frames: usize,
+    pub label: Option<String>,
+    pub network: bool,
+    pub json: bool,
+    pub command: Command,
+}
+
+/// The selected subcommand and its positional arguments.
+#[derive(Debug, Clone)]
+pub enum Command {
+    Help,
+    Version,
