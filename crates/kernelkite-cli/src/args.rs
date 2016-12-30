@@ -60,3 +60,17 @@ impl Cli {
         let mut interval_ms = 100u64;
         let mut max_frames = 100usize;
         let mut label = None;
+        let mut network = false;
+        let mut json = false;
+
+        let mut it = args.into_iter().peekable();
+        let mut subcommand: Option<String> = None;
+
+        // Consume global flags until we hit the subcommand token.
+        while let Some(tok) = it.peek() {
+            match tok.as_str() {
+                "--interval-ms" => {
+                    it.next();
+                    interval_ms = parse_num(it.next(), "--interval-ms")?;
+                }
+                "--max-frames" => {
