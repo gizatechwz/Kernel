@@ -115,3 +115,17 @@ impl Cli {
             label,
             network,
             json,
+            command,
+        })
+    }
+
+    fn simple(command: Command) -> Cli {
+        Cli {
+            interval_ms: 100,
+            max_frames: 100,
+            label: None,
+            network: false,
+            json: false,
+            command,
+        }
+    }
