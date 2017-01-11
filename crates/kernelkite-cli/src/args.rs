@@ -74,3 +74,17 @@ impl Cli {
                     interval_ms = parse_num(it.next(), "--interval-ms")?;
                 }
                 "--max-frames" => {
+                    it.next();
+                    max_frames = parse_num(it.next(), "--max-frames")?;
+                }
+                "--label" => {
+                    it.next();
+                    label = Some(
+                        it.next()
+                            .ok_or_else(|| "--label requires a value".to_string())?,
+                    );
+                }
+                "--network" => {
+                    it.next();
+                    network = true;
+                }
