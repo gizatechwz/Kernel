@@ -157,3 +157,17 @@ fn parse_command(sub: &str, rest: Vec<String>) -> Result<Command, String> {
             }
             Ok(Command::Run { out, command })
         }
+        "replay" => {
+            let mut p = rest.into_iter();
+            let fixture = p
+                .next()
+                .ok_or_else(|| "replay: missing fixture path".to_string())?;
+            let out = p
+                .next()
+                .ok_or_else(|| "replay: missing output bundle path".to_string())?;
+            Ok(Command::Replay { fixture, out })
+        }
+        "summary" => {
+            let bundle = rest
+                .into_iter()
+                .next()
