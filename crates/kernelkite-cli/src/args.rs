@@ -143,3 +143,17 @@ fn parse_command(sub: &str, rest: Vec<String>) -> Result<Command, String> {
         "version" => Ok(Command::Version),
         "run" => {
             // Layout: <bundle.json> -- <cmd> [args...]
+            let mut parts = rest.into_iter();
+            let out = parts
+                .next()
+                .ok_or_else(|| "run: missing output bundle path".to_string())?;
+            let sep = parts.next();
+            if sep.as_deref() != Some("--") {
+                return Err("run: expected `--` before the command to profile".into());
+            }
+            let command: Vec<String> = parts.collect();
+            if command.is_empty() {
+                return Err("run: no command specified after `--`".into());
+            }
+            Ok(Command::Run { out, command })
+        }
