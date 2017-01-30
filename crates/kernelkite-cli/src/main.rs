@@ -27,3 +27,17 @@ fn main() -> ExitCode {
             eprint!("{}", args::USAGE);
             return ExitCode::from(2);
         }
+    };
+
+    match run(cli) {
+        Ok(code) => code,
+        Err(e) => {
+            eprintln!("kernelkite: {e}");
+            ExitCode::FAILURE
+        }
+    }
+}
+
+fn run(cli: Cli) -> kk::Result<ExitCode> {
+    // Move the command out so the remaining `cli` can be borrowed for flags.
+    let Cli {
