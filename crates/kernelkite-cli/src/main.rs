@@ -41,3 +41,16 @@ fn main() -> ExitCode {
 fn run(cli: Cli) -> kk::Result<ExitCode> {
     // Move the command out so the remaining `cli` can be borrowed for flags.
     let Cli {
+        interval_ms,
+        max_frames,
+        label,
+        network,
+        json,
+        command,
+    } = cli;
+    let flags = Cli {
+        interval_ms,
+        max_frames,
+        label,
+        network,
+        json,
