@@ -14,3 +14,16 @@
 use kernelkite_core as kk;
 use std::process::ExitCode;
 
+mod args;
+mod render;
+
+use args::{Cli, Command};
+
+fn main() -> ExitCode {
+    let cli = match Cli::parse(std::env::args().skip(1)) {
+        Ok(cli) => cli,
+        Err(msg) => {
+            eprintln!("error: {msg}\n");
+            eprint!("{}", args::USAGE);
+            return ExitCode::from(2);
+        }
