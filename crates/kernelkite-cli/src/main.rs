@@ -95,3 +95,16 @@ fn cmd_run(cli: &Cli, out: &str, command: &[String]) -> kk::Result<ExitCode> {
             ))
         },
         &opts,
+    )?;
+    kk::save(&bundle, out)?;
+    eprintln!(
+        "captured {} frame(s) over {} ms -> {}",
+        bundle.frames.len(),
+        bundle.duration_ms(),
+        out
+    );
+    let code = bundle.meta.exit_code.unwrap_or(0);
+    Ok(ExitCode::from(code.clamp(0, 255) as u8))
+}
+
+fn cmd_replay(cli: &Cli, fixture: &str, out: &str) -> kk::Result<ExitCode> {
