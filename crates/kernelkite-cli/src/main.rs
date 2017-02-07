@@ -68,3 +68,16 @@ fn run(cli: Cli) -> kk::Result<ExitCode> {
         Command::Run { out, command } => cmd_run(&flags, &out, &command),
         Command::Replay { fixture, out } => cmd_replay(&flags, &fixture, &out),
         Command::Summary { bundle } => cmd_summary(&flags, &bundle),
+        Command::Compare { before, after } => cmd_compare(&flags, &before, &after),
+        Command::Tree { bundle } => cmd_tree(&bundle),
+        Command::Viewer { bundle, out } => cmd_viewer(&bundle, out.as_deref()),
+    }
+}
+
+fn capture_opts(cli: &Cli, label: &str) -> kk::CaptureOptions {
+    kk::CaptureOptions {
+        label: cli.label.clone().unwrap_or_else(|| label.to_string()),
+        interval_ms: cli.interval_ms,
+        max_frames: cli.max_frames,
+        record_wall_clock: true,
+    }
