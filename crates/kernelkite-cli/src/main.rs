@@ -81,3 +81,17 @@ fn capture_opts(cli: &Cli, label: &str) -> kk::CaptureOptions {
         max_frames: cli.max_frames,
         record_wall_clock: true,
     }
+}
+
+fn cmd_run(cli: &Cli, out: &str, command: &[String]) -> kk::Result<ExitCode> {
+    let opts = capture_opts(cli, "live");
+    let with_network = cli.network;
+    let bundle = kk::run_and_profile(
+        command,
+        |child_pid| {
+            Ok(kk::ProcSampler::new(
+                kk::PidFilter::Subtree(child_pid as i32),
+                with_network,
+            ))
+        },
+        &opts,
