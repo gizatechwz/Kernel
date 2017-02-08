@@ -46,3 +46,17 @@ pub fn summary_text(s: &Summary) -> String {
         }
         _ => out.push_str("  network       : (not sampled)\n"),
     }
+    out
+}
+
+/// Render a [`Comparison`] as a before/after table.
+pub fn comparison_text(c: &Comparison) -> String {
+    let mut out = String::new();
+    out.push_str(&format!(
+        "Comparison: {} -> {}\n\n",
+        c.before.label, c.after.label
+    ));
+    out.push_str(&format!(
+        "{:<16} {:>16} {:>16} {:>14} {:>10}\n",
+        "metric", "before", "after", "change", "pct"
+    ));
