@@ -60,3 +60,16 @@ pub fn comparison_text(c: &Comparison) -> String {
         "{:<16} {:>16} {:>16} {:>14} {:>10}\n",
         "metric", "before", "after", "change", "pct"
     ));
+    out.push_str(&"-".repeat(76));
+    out.push('\n');
+    for d in &c.deltas {
+        let pct = match d.pct_change {
+            Some(p) => format!("{p:+.1}%"),
+            None => "n/a".to_string(),
+        };
+        out.push_str(&format!(
+            "{:<16} {:>16.3} {:>16.3} {:>+14.3} {:>10}\n",
+            d.metric, d.before, d.after, d.abs_change, pct
+        ));
+    }
+    out
