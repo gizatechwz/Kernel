@@ -33,3 +33,16 @@ pub fn summary_text(s: &Summary) -> String {
         "  peak rss      : {}\n",
         human_bytes(s.peak_rss_bytes)
     ));
+    if let (Some(r), Some(w)) = (s.read_bytes, s.write_bytes) {
+        out.push_str(&format!("  disk read     : {}\n", human_bytes(r)));
+        out.push_str(&format!("  disk write    : {}\n", human_bytes(w)));
+    } else {
+        out.push_str("  disk io       : (not recorded)\n");
+    }
+    match (s.net_rx_bytes, s.net_tx_bytes) {
+        (Some(rx), Some(tx)) => {
+            out.push_str(&format!("  net rx        : {}\n", human_bytes(rx)));
+            out.push_str(&format!("  net tx        : {}\n", human_bytes(tx)));
+        }
+        _ => out.push_str("  network       : (not sampled)\n"),
+    }
