@@ -19,3 +19,17 @@ pub fn human_bytes(n: u64) -> String {
     } else {
         format!("{v:.2} {}", UNITS[u])
     }
+}
+
+/// Render a [`Summary`] as an aligned text block.
+pub fn summary_text(s: &Summary) -> String {
+    let mut out = String::new();
+    out.push_str(&format!("Profile summary: {} [{}]\n", s.label, s.backend));
+    out.push_str(&format!("  duration      : {} ms\n", s.duration_ms));
+    out.push_str(&format!("  frames        : {}\n", s.frames));
+    out.push_str(&format!("  distinct pids : {}\n", s.distinct_pids));
+    out.push_str(&format!("  cpu seconds   : {:.3}\n", s.cpu_seconds));
+    out.push_str(&format!(
+        "  peak rss      : {}\n",
+        human_bytes(s.peak_rss_bytes)
+    ));
