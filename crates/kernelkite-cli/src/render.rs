@@ -73,3 +73,17 @@ pub fn comparison_text(c: &Comparison) -> String {
         ));
     }
     out
+}
+
+/// Render the observed process tree as an indented outline.
+pub fn tree_text(bundle: &ProfileBundle) -> String {
+    let tree = bundle.process_tree();
+    // Map pid -> comm from the latest observation for nice labels.
+    let mut comm: std::collections::BTreeMap<i32, String> = std::collections::BTreeMap::new();
+    for f in &bundle.frames {
+        for s in f.processes.values() {
+            comm.insert(s.pid, s.comm.clone());
+        }
+    }
+    let all_pids: std::collections::BTreeSet<i32> = comm.keys().copied().collect();
+    // Roots are pids whose parent is not itself an observed pid.
