@@ -127,3 +127,17 @@ fn render_node(
             }
         }
     }
+}
+
+// ---- Viewer document ------------------------------------------------------
+
+/// A per-process series consumed by the TypeScript timeline viewer.
+#[derive(Debug, Serialize)]
+pub struct ViewerSeries {
+    pub pid: i32,
+    pub ppid: i32,
+    pub comm: String,
+    /// CPU utilisation percentage per frame (0..N*100 for multi-core).
+    pub cpu_pct: Vec<f64>,
+    /// Resident memory per frame in bytes.
+    pub rss_bytes: Vec<u64>,
