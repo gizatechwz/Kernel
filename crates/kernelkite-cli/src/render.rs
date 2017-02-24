@@ -100,3 +100,17 @@ pub fn tree_text(bundle: &ProfileBundle) -> String {
                 .unwrap_or(0);
             !all_pids.contains(&ppid)
         })
+        .collect();
+    roots.sort_unstable();
+
+    let mut out = String::new();
+    out.push_str(&format!("Process tree ({} pids)\n", all_pids.len()));
+    for r in roots {
+        render_node(&mut out, r, &tree, &comm, 0);
+    }
+    out
+}
+
+fn render_node(
+    out: &mut String,
+    pid: i32,
