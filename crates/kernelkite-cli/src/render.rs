@@ -155,3 +155,16 @@ pub struct ViewerDocument {
 
 /// Build a [`ViewerDocument`] from a bundle by computing per-frame CPU% from
 /// the delta of cumulative CPU ticks between adjacent frames.
+pub fn viewer_document(bundle: &ProfileBundle) -> ViewerDocument {
+    let ticks_per_sec = bundle.meta.clock_ticks_per_sec.max(1) as f64;
+    let t_ms: Vec<u64> = bundle.frames.iter().map(|f| f.t_ms).collect();
+    let pids = bundle.pids();
+
+    let mut series = Vec::with_capacity(pids.len());
+    for pid in pids {
+        let mut cpu_pct = Vec::with_capacity(bundle.frames.len());
+        let mut rss_bytes = Vec::with_capacity(bundle.frames.len());
+        let mut ppid = 0;
+        let mut comm = String::new();
+        let mut prev_cpu: Option<u64> = None;
+        let mut prev_t: Option<u64> = None;
