@@ -141,3 +141,17 @@ pub struct ViewerSeries {
     pub cpu_pct: Vec<f64>,
     /// Resident memory per frame in bytes.
     pub rss_bytes: Vec<u64>,
+}
+
+/// Top-level document handed to the viewer: shared time axis plus series.
+#[derive(Debug, Serialize)]
+pub struct ViewerDocument {
+    pub label: String,
+    pub backend: String,
+    pub interval_ms: u64,
+    pub t_ms: Vec<u64>,
+    pub series: Vec<ViewerSeries>,
+}
+
+/// Build a [`ViewerDocument`] from a bundle by computing per-frame CPU% from
+/// the delta of cumulative CPU ticks between adjacent frames.
