@@ -31,3 +31,12 @@ function main(argv: string[]): number {
   try {
     raw = readFileSync(inputPath, "utf8");
   } catch (e) {
+    process.stderr.write(`error: cannot read ${inputPath}: ${String(e)}\n`);
+    return 1;
+  }
+
+  let doc;
+  try {
+    doc = parseViewerDocument(JSON.parse(raw));
+  } catch (e) {
+    process.stderr.write(`error: invalid viewer document: ${String(e)}\n`);
