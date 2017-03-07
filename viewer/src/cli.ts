@@ -22,3 +22,12 @@ function main(argv: string[]): number {
       "usage: kernelkite-render <viewer.json> [out.svg|out.html]\n",
     );
     return args.length === 0 ? 2 : 0;
+  }
+
+  const inputPath = args[0];
+  const outPath = args[1];
+
+  let raw: string;
+  try {
+    raw = readFileSync(inputPath, "utf8");
+  } catch (e) {
