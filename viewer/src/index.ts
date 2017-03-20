@@ -11,3 +11,6 @@ export {
   ViewerDocument,
   ViewerSeries,
   parseViewerDocument,
+  humanBytes,
+} from "./model.js";
+
