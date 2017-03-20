@@ -7,3 +7,7 @@
  * via the bundled {@link file://./cli.ts} renderer.
  */
 
+export {
+  ViewerDocument,
+  ViewerSeries,
+  parseViewerDocument,
