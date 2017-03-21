@@ -10,3 +10,10 @@ const valid = {
   series: [
     {
       pid: 5000,
+      ppid: 4200,
+      comm: "cargo",
+      cpu_pct: [0, 12.5, 8.0],
+      rss_bytes: [12582912, 20971520, 22020096],
+    },
+  ],
+};
