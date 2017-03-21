@@ -17,3 +17,10 @@ const valid = {
     },
   ],
 };
+
+test("parses a well-formed viewer document", () => {
+  const doc = parseViewerDocument(valid);
+  assert.equal(doc.label, "before");
+  assert.equal(doc.series.length, 1);
+  assert.equal(doc.series[0].comm, "cargo");
+  assert.deepEqual(doc.t_ms, [0, 250, 500]);
