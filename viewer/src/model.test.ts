@@ -24,3 +24,9 @@ test("parses a well-formed viewer document", () => {
   assert.equal(doc.series.length, 1);
   assert.equal(doc.series[0].comm, "cargo");
   assert.deepEqual(doc.t_ms, [0, 250, 500]);
+});
+
+test("rejects misaligned series arrays", () => {
+  const bad = structuredClone(valid);
+  bad.series[0].cpu_pct = [1, 2]; // shorter than t_ms
+  assert.throws(() => parseViewerDocument(bad), /must match 3 frames/);
