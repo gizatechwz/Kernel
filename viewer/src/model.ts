@@ -53,3 +53,13 @@ export function parseViewerDocument(input: unknown): ViewerDocument {
     if (typeof s.ppid !== "number") throw new Error(`series[${i}].ppid must be a number`);
     if (typeof s.comm !== "string") throw new Error(`series[${i}].comm must be a string`);
     if (!isNumberArray(s.cpu_pct)) throw new Error(`series[${i}].cpu_pct must be numbers`);
+    if (!isNumberArray(s.rss_bytes)) throw new Error(`series[${i}].rss_bytes must be numbers`);
+    if (s.cpu_pct.length !== frames || s.rss_bytes.length !== frames) {
+      throw new Error(
+        `series[${i}] arrays (len ${s.cpu_pct.length}/${s.rss_bytes.length}) ` +
+          `must match ${frames} frames`,
+      );
+    }
+    return {
+      pid: s.pid,
+      ppid: s.ppid,
