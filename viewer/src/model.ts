@@ -35,3 +35,12 @@ function isNumberArray(x: unknown): x is number[] {
 export function parseViewerDocument(input: unknown): ViewerDocument {
   if (typeof input !== "object" || input === null) {
     throw new Error("viewer document must be an object");
+  }
+  const doc = input as Record<string, unknown>;
+  if (typeof doc.label !== "string") throw new Error("missing string field: label");
+  if (typeof doc.backend !== "string") throw new Error("missing string field: backend");
+  if (typeof doc.interval_ms !== "number") throw new Error("missing number field: interval_ms");
+  if (!isNumberArray(doc.t_ms)) throw new Error("t_ms must be an array of numbers");
+  if (!Array.isArray(doc.series)) throw new Error("series must be an array");
+
+  const frames = doc.t_ms.length;
