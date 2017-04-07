@@ -25,3 +25,13 @@ export interface ViewerDocument {
 
 function isNumberArray(x: unknown): x is number[] {
   return Array.isArray(x) && x.every((n) => typeof n === "number" && Number.isFinite(n));
+}
+
+/**
+ * Parse and validate an unknown value into a {@link ViewerDocument}. Throws a
+ * descriptive error if the shape is wrong or the series arrays are not aligned
+ * to the time axis — the same invariant the Rust exporter guarantees.
+ */
+export function parseViewerDocument(input: unknown): ViewerDocument {
+  if (typeof input !== "object" || input === null) {
+    throw new Error("viewer document must be an object");
