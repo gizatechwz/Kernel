@@ -63,3 +63,12 @@ export function parseViewerDocument(input: unknown): ViewerDocument {
     return {
       pid: s.pid,
       ppid: s.ppid,
+      comm: s.comm,
+      cpu_pct: s.cpu_pct,
+      rss_bytes: s.rss_bytes,
+    };
+  });
+
+  return {
+    label: doc.label,
+    backend: doc.backend,
