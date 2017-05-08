@@ -41,3 +41,12 @@ test("includes one polyline per series with data", () => {
 
 test("labels every process by pid and comm", () => {
   const svg = renderTimelineSvg(doc);
+  assert.match(svg, /6000 cargo/);
+  assert.match(svg, /6010 rustc/);
+});
+
+test("escapes XML-sensitive characters in comm", () => {
+  const tricky = parseViewerDocument({
+    label: "x",
+    backend: "fixture",
+    interval_ms: 100,
