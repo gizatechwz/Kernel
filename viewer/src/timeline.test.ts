@@ -23,3 +23,12 @@ const doc = parseViewerDocument({
       cpu_pct: [0, 80, 120, 40],
       rss_bytes: [0, 75497472, 234881024, 318767104],
     },
+  ],
+});
+
+test("renders valid SVG root with a viewBox", () => {
+  const svg = renderTimelineSvg(doc);
+  assert.match(svg, /^<svg xmlns="http:\/\/www\.w3\.org\/2000\/svg"/);
+  assert.match(svg, /viewBox="0 0 \d+ \d+"/);
+  assert.ok(svg.trim().endsWith("</svg>"));
+});
