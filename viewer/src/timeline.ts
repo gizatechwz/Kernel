@@ -72,3 +72,18 @@ export function renderTimelineSvg(
   const opt = { ...DEFAULT_OPTIONS, ...options };
   const lanes = doc.series.length;
   const plotX = opt.labelWidth + opt.padding;
+  const plotWidth = opt.width - plotX - opt.padding;
+  const headerHeight = 52;
+  const height = headerHeight + lanes * opt.laneHeight + opt.padding;
+
+  const globalMaxCpu = Math.max(
+    1,
+    ...doc.series.flatMap((s) => s.cpu_pct),
+  );
+
+  const parts: string[] = [];
+  parts.push(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${opt.width}" height="${height}" ` +
+      `viewBox="0 0 ${opt.width} ${height}" role="img" ` +
+      `aria-label="kernelkite CPU timeline for ${escapeXml(doc.label)}">`,
+  );
