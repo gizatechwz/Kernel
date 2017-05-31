@@ -101,3 +101,17 @@ export function renderTimelineSvg(
       `font-size="11">${doc.series.length} processes · ${doc.t_ms.length} frames · ` +
       `${durMs} ms · interval ${doc.interval_ms} ms</text>`,
   );
+
+  doc.series.forEach((s, i) => {
+    const laneTop = headerHeight + i * opt.laneHeight;
+    const colour = PALETTE[i % PALETTE.length];
+    // Lane separator.
+    parts.push(
+      `<line x1="${opt.padding}" y1="${laneTop}" x2="${opt.width - opt.padding}" ` +
+        `y2="${laneTop}" stroke="#21262d" stroke-width="1"/>`,
+    );
+    // Label: pid + comm.
+    parts.push(
+      `<text x="${opt.padding}" y="${laneTop + opt.laneHeight / 2 + 4}" fill="${colour}" ` +
+        `font-family="monospace" font-size="12">${s.pid} ${escapeXml(s.comm)}</text>`,
+    );
