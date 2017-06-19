@@ -130,3 +130,17 @@ export function renderTimelineSvg(
       laneTop,
       opt.laneHeight,
       globalMaxCpu,
+    );
+    if (pts) {
+      parts.push(
+        `<polyline points="${pts}" fill="none" stroke="${colour}" ` +
+          `stroke-width="2" stroke-linejoin="round"/>`,
+      );
+    }
+  });
+
+  parts.push(`</svg>`);
+  return parts.join("\n");
+}
+
+/** Wrap a rendered SVG in a minimal standalone HTML page (no remote assets). */
