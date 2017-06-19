@@ -115,3 +115,18 @@ export function renderTimelineSvg(
       `<text x="${opt.padding}" y="${laneTop + opt.laneHeight / 2 + 4}" fill="${colour}" ` +
         `font-family="monospace" font-size="12">${s.pid} ${escapeXml(s.comm)}</text>`,
     );
+    // Peak RSS annotation on the right of the label column.
+    const peakRss = Math.max(0, ...s.rss_bytes);
+    parts.push(
+      `<text x="${opt.labelWidth}" y="${laneTop + opt.laneHeight / 2 + 4}" fill="#8b949e" ` +
+        `font-family="monospace" font-size="10" text-anchor="end">` +
+        `${humanBytes(peakRss)}</text>`,
+    );
+    // CPU polyline.
+    const pts = cpuPolyline(
+      s,
+      plotX,
+      plotWidth,
+      laneTop,
+      opt.laneHeight,
+      globalMaxCpu,
