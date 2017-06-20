@@ -17,3 +17,15 @@ up in a summary or a comparison, its provenance is described here.
 > `Error::Unsupported` on every call. There is no BPF program, no ring buffer,
 > and no synthesized "eBPF" output anywhere in the codebase. The type exists so
 > that the backend enum, the roadmap, and the CLI wiring are honest about the
+> intended future shape without pretending the work is done. See
+> `crates/kernelkite-core/src/ebpf.rs`.
+
+## The sampling loop
+
+kernelkite is a **sampling** profiler, not a tracer. On a fixed cadence
+(`--interval-ms`, default 100 ms) it takes a snapshot of every process in scope
+and records it as one *frame*. A profile bundle is an ordered list of frames
+plus capture metadata.
+
+```
+t=0ms     t=100ms    t=200ms    t=300ms   ...
