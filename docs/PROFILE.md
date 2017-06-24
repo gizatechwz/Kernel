@@ -41,3 +41,15 @@ than one interval may fall between frames. For a build/test loop that runs for
 hundreds of milliseconds to minutes, a 50–200 ms interval captures the shape
 faithfully.
 
+## What is read on Linux (`proc` backend)
+
+For each selected pid, per frame:
+
+| Field           | Source                        | Notes                                                |
+|-----------------|-------------------------------|------------------------------------------------------|
+| `ppid`, `comm`  | `/proc/<pid>/stat`            | `comm` is parsed robustly even with spaces/parens.   |
+| `utime`,`stime` | `/proc/<pid>/stat`            | CPU time in clock ticks since process start (cumulative). |
+| `rss_bytes`     | `/proc/<pid>/statm` (resident)| `resident_pages × page_size`.                        |
+| `vsize_bytes`   | `/proc/<pid>/statm` (size)    | `size_pages × page_size`.                            |
+| `threads`       | `/proc/<pid>/stat`            | `num_threads`.                                       |
+| `read_bytes`    | `/proc/<pid>/io`              | Storage-layer bytes, cumulative. `None` if unreadable. |
