@@ -29,3 +29,15 @@ plus capture metadata.
 
 ```
 t=0ms     t=100ms    t=200ms    t=300ms   ...
+[frame]   [frame]    [frame]    [frame]
+  |          |          |          |
+  +-- per-process CPU / memory / IO / fd counts, + optional network summary
+```
+
+Because it samples rather than intercepts syscalls, kernelkite has low, bounded
+overhead and needs no elevated privileges beyond read access to the target
+processes' `/proc` entries. The tradeoff is temporal resolution: events shorter
+than one interval may fall between frames. For a build/test loop that runs for
+hundreds of milliseconds to minutes, a 50–200 ms interval captures the shape
+faithfully.
+
