@@ -101,3 +101,16 @@ into the aggregates a developer cares about:
   memory of every process alive in that frame. A conservative "how much memory
   did this loop need at once" figure.
 - **read_bytes / write_bytes** — the summed delta of each pid's cumulative I/O
+  counters. `None` when `/proc/<pid>/io` was not readable for any process.
+- **net_rx_bytes / net_tx_bytes** — last-minus-first of the host-wide network
+  summary. Present only if `--network` was used.
+- **duration_ms / frames / distinct_pids** — timeline shape.
+
+### CPU% in the viewer
+
+The viewer document computes a per-frame CPU **percentage** from the delta of
+cumulative ticks between adjacent frames:
+
+```
+cpu_pct = (Δticks / clock_ticks_per_sec) / Δt_seconds × 100
+```
