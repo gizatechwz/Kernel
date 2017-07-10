@@ -89,3 +89,15 @@ drop out as they exit. The core also supports `PidFilter::All` and an explicit
 `PidFilter::Set`.
 
 ## Derived metrics
+
+Raw bundles store cumulative kernel counters. `kernelkite summary` turns them
+into the aggregates a developer cares about:
+
+- **cpu_seconds** — for each pid, `(last_cpu_ticks − first_cpu_ticks)` summed
+  across pids, divided by the host's `clock_ticks_per_sec`. This measures CPU
+  *consumed during the capture window*, robust to processes that started before
+  sampling began.
+- **peak_rss_bytes** — the maximum, over all frames, of the summed resident
+  memory of every process alive in that frame. A conservative "how much memory
+  did this loop need at once" figure.
+- **read_bytes / write_bytes** — the summed delta of each pid's cumulative I/O
