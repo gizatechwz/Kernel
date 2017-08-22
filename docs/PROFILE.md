@@ -138,3 +138,15 @@ bundle always serializes to identical bytes (verified by
     "host_os": "linux",
     "exit_code": 0                        // present when a command was run
   },
+  "frames": [
+    {
+      "t_ms": 0,
+      "processes": [                      // serialized as an array, keyed by pid in memory
+        { "pid": 5000, "ppid": 4200, "comm": "cargo",
+          "utime_ticks": 8, "stime_ticks": 3,
+          "rss_bytes": 20971520, "vsize_bytes": 524288000,
+          "threads": 6, "read_bytes": 65536, "write_bytes": 4096, "open_fds": 18 }
+      ],
+      "network": { "rx_bytes": 0, "tx_bytes": 0, "interfaces": ["eth0"] } // optional
+    }
+  ]
