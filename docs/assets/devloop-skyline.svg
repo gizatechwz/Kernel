@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="320" viewBox="0 0 880 320"
+     role="img" aria-labelledby="sk-title sk-desc">
+  <title id="sk-title">kernelkite before and after comparison</title>
+  <desc id="sk-desc">Grouped bar chart. For each metric a tall red bar shows the baseline value
+    and a shorter green bar shows the optimized value. Proportions match samples/comparison.json:
+    duration down 33 percent, cpu down 56 percent, peak rss down 60 percent, disk read down 57
