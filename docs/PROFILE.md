@@ -150,3 +150,15 @@ bundle always serializes to identical bytes (verified by
       "network": { "rx_bytes": 0, "tx_bytes": 0, "interfaces": ["eth0"] } // optional
     }
   ]
+}
+```
+
+Loading validates `schema_version`; a mismatch is a hard error
+(`schema_mismatch_is_rejected`).
+
+## Determinism
+
+- **Fixtures** never record wall-clock time and replay their own recorded
+  timestamps, so a replayed bundle is byte-for-byte reproducible
+  (`fixture_replay_is_deterministic`).
+- **BTreeMap** ordering for processes and stable struct field order make JSON
