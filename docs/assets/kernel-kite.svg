@@ -16,3 +16,13 @@
     <line x1="320" y1="64" x2="320" y2="76"/>
     <line x1="420" y1="64" x2="420" y2="76"/>
     <line x1="520" y1="64" x2="520" y2="76"/>
+    <line x1="620" y1="64" x2="620" y2="76"/>
+  </g>
+  <text x="60" y="52" font-family="monospace" font-size="12" fill="#8fa3b8">fixed interval, tick by tick</text>
+  <!-- the sampling head sweeps the ruler in even steps -->
+  <rect x="112" y="60" width="16" height="20" fill="#e0b341">
+    <animate attributeName="x" values="112;212;312;412;512;612;112" dur="4.2s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- launched command -->
+  <g font-family="monospace">
