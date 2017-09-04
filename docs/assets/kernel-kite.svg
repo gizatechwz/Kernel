@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="300" viewBox="0 0 880 300"
+     role="img" aria-labelledby="kk-title kk-desc">
+  <title id="kk-title">kernelkite: sample the process subtree, land a deterministic bundle</title>
+  <desc id="kk-desc">Left to right data flow. A launched command forks a subtree of processes.
+    kernelkite samples the subtree from /proc on a fixed interval, collecting CPU, RSS and IO
+    counters into ordered frames, then writes a deterministic bundle that can be summarized,
+    diffed, and rendered. Flat two-color palette, no remote assets.</desc>
+
+  <rect x="0" y="0" width="880" height="300" fill="#0f1720"/>
