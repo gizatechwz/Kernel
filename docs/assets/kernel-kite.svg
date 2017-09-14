@@ -35,3 +35,12 @@
   <g stroke="#5fb3a1" stroke-width="2" fill="none">
     <path d="M180 132 H 240 V 108 H 300"/>
     <path d="M180 150 H 240 V 150 H 300"/>
+    <path d="M180 156 H 240 V 196 H 300"/>
+  </g>
+
+  <!-- process subtree towers, height = relative CPU burn -->
+  <g font-family="monospace">
+    <rect x="300" y="96"  width="70" height="24" fill="#2b3a4d" stroke="#5fb3a1"/>
+    <text x="335" y="112" text-anchor="middle" font-size="11" fill="#e6edf3">rustc</text>
+    <rect x="300" y="138" width="70" height="24" fill="#2b3a4d" stroke="#5fb3a1"/>
+    <text x="335" y="154" text-anchor="middle" font-size="11" fill="#e6edf3">rustc</text>
