@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "schema_version": 1,
+    "backend": "fixture",
+    "label": "after",
+    "clock_ticks_per_sec": 100,
+    "page_size_bytes": 4096,
+    "interval_ms": 100,
+    "host_os": "windows"
+  },
+  "frames": [
+    {
+      "t_ms": 0,
+      "processes": [
+        {
+          "pid": 6000,
+          "ppid": 4200,
+          "comm": "cargo",
