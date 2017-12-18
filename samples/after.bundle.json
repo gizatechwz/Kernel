@@ -103,3 +103,25 @@
           "threads": 6,
           "read_bytes": 196608,
           "write_bytes": 16384,
+          "open_fds": 19
+        },
+        {
+          "pid": 6010,
+          "ppid": 6000,
+          "comm": "rustc",
+          "utime_ticks": 82,
+          "stime_ticks": 16,
+          "rss_bytes": 318767104,
+          "vsize_bytes": 1879048192,
+          "threads": 8,
+          "read_bytes": 1048576,
+          "write_bytes": 393216,
+          "open_fds": 54
+        },
+        {
+          "pid": 6020,
+          "ppid": 6010,
+          "comm": "ld",
+          "utime_ticks": 8,
+          "stime_ticks": 4,
+          "rss_bytes": 50331648,
