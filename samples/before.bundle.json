@@ -140,3 +140,26 @@
           "rss_bytes": 385875968,
           "vsize_bytes": 2080374784,
           "threads": 6,
+          "read_bytes": 983040,
+          "write_bytes": 245760,
+          "open_fds": 50
+        }
+      ]
+    },
+    {
+      "t_ms": 1000,
+      "processes": [
+        {
+          "pid": 5000,
+          "ppid": 4200,
+          "comm": "cargo",
+          "utime_ticks": 18,
+          "stime_ticks": 7,
+          "rss_bytes": 24117248,
+          "vsize_bytes": 524288000,
+          "threads": 6,
+          "read_bytes": 262144,
+          "write_bytes": 32768,
+          "open_fds": 22
+        },
+        {
