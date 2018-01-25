@@ -186,3 +186,27 @@
           "threads": 6,
           "read_bytes": 1507328,
           "write_bytes": 491520,
+          "open_fds": 56
+        },
+        {
+          "pid": 5020,
+          "ppid": 5010,
+          "comm": "ld",
+          "utime_ticks": 6,
+          "stime_ticks": 3,
+          "rss_bytes": 41943040,
+          "vsize_bytes": 335544320,
+          "threads": 1,
+          "read_bytes": 262144,
+          "write_bytes": 393216,
+          "open_fds": 14
+        }
+      ]
+    },
+    {
+      "t_ms": 1250,
+      "processes": [
+        {
+          "pid": 5000,
+          "ppid": 4200,
+          "comm": "cargo",
