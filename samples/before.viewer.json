@@ -1,0 +1,10 @@
+{
+  "label": "before",
+  "backend": "fixture",
+  "interval_ms": 100,
+  "t_ms": [
+    0,
+    250,
+    500,
+    750,
+    1000,
