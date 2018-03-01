@@ -10,3 +10,6 @@
 <text x="16" y="122" fill="#f58518" font-family="monospace" font-size="12">5010 rustc</text>
 <text x="150" y="122" fill="#8b949e" font-family="monospace" font-size="10" text-anchor="end">448.00 MiB</text>
 <polyline points="166.0,136.0 285.7,136.0 405.3,110.1 525.0,100.0 644.7,100.7 764.3,136.0 884.0,136.0" fill="none" stroke="#f58518" stroke-width="2" stroke-linejoin="round"/>
+<line x1="16" y1="140" x2="884" y2="140" stroke="#21262d" stroke-width="1"/>
+<text x="16" y="166" fill="#54a24b" font-family="monospace" font-size="12">5011 rustc</text>
+<text x="150" y="166" fill="#8b949e" font-family="monospace" font-size="10" text-anchor="end">432.00 MiB</text>
