@@ -19,3 +19,18 @@
     "frames": 6,
     "distinct_pids": 3,
     "cpu_seconds": 1.23,
+    "peak_rss_bytes": 391118848,
+    "read_bytes": 1507328,
+    "write_bytes": 1196032,
+    "net_rx_bytes": null,
+    "net_tx_bytes": null
+  },
+  "deltas": [
+    {
+      "metric": "duration_ms",
+      "before": 1500.0,
+      "after": 1000.0,
+      "abs_change": -500.0,
+      "pct_change": -33.33333333333333
+    },
+    {
