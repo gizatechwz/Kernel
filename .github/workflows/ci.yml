@@ -42,3 +42,19 @@ jobs:
         run: cargo clippy --workspace --all-targets -- -D warnings
 
       # On Linux this runs the real /proc parser tests against a synthetic
+      # procfs tree; on Windows it exercises the cfg-guarded shim + fixtures.
+      - name: Test
+        run: cargo test --workspace
+
+      - name: Build release
+        run: cargo build --release
+
+      # Guard the "not implemented" eBPF stub compiles under its feature flag.
+      - name: Build with ebpf feature (stub only)
+        run: cargo build -p kernelkite-cli --features ebpf
+
+  viewer:
+    name: typescript viewer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
