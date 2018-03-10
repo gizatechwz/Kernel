@@ -6,3 +6,10 @@ members = [
 ]
 
 [workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.74"
+license = "MIT"
+authors = ["KernelKite contributors"]
+repository = "https://github.com/Mujung/KernelKite"
+description = "Linux-first local developer-loop process profiler"
