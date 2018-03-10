@@ -1,2 +1,8 @@
 [workspace]
 resolver = "2"
+members = [
+    "crates/kernelkite-core",
+    "crates/kernelkite-cli",
+]
+
+[workspace.package]
