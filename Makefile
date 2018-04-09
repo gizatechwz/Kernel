@@ -15,3 +15,13 @@ help: ## Show this help
 	  awk 'BEGIN{FS=":.*?## "}{printf "  \033[36m%-14s\033[0m %s\n", $$1, $$2}'
 
 .PHONY: build
+build: ## Build the Rust workspace (release)
+	$(CARGO) build --release
+
+.PHONY: test
+test: ## Run all Rust tests
+	$(CARGO) test --workspace
+
+.PHONY: fmt
+fmt: ## Format Rust sources
+	$(CARGO) fmt --all
