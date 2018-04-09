@@ -25,3 +25,14 @@ test: ## Run all Rust tests
 .PHONY: fmt
 fmt: ## Format Rust sources
 	$(CARGO) fmt --all
+
+.PHONY: fmt-check
+fmt-check: ## Check formatting without writing
+	$(CARGO) fmt --all -- --check
+
+.PHONY: clippy
+clippy: ## Lint with clippy, warnings as errors
+	$(CARGO) clippy --workspace --all-targets -- -D warnings
+
+.PHONY: viewer
+viewer: ## Build and test the TypeScript viewer
