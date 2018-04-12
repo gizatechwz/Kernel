@@ -36,3 +36,14 @@ clippy: ## Lint with clippy, warnings as errors
 
 .PHONY: viewer
 viewer: ## Build and test the TypeScript viewer
+	cd viewer && $(NPM) ci || $(NPM) install
+	cd viewer && $(NPM) run build
+	cd viewer && $(NPM) test
+
+.PHONY: samples
+samples: build viewer ## Regenerate sample bundles, comparison, viewer docs and SVG
+	$(BIN) --label before replay fixtures/cargo-build-before.json samples/before.bundle.json
+	$(BIN) --label after  replay fixtures/cargo-build-after.json  samples/after.bundle.json
+	$(BIN) --json compare samples/before.bundle.json samples/after.bundle.json > samples/comparison.json
+	$(BIN) viewer samples/before.bundle.json samples/before.viewer.json
+	$(BIN) viewer samples/after.bundle.json  samples/after.viewer.json
