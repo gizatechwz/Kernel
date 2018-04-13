@@ -9,3 +9,4 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 Nothing yet.
 
 ## [0.1.0] — 2026-08-31
+
