@@ -12,3 +12,4 @@ Nothing yet.
 
 Initial release: a working, honest local developer-loop process profiler.
 
+### Added
