@@ -18,3 +18,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - Serializable data model: `ProcessSample`, `Frame`, `NetworkSummary`,
     `CaptureMeta`, `ProfileBundle` (bundle schema **v1**).
   - `Sampler` trait with three backends:
+    - `proc` — Linux `/proc` sampler reading CPU (`stat`), memory (`statm`),
