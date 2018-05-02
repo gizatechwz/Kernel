@@ -16,3 +16,4 @@ Initial release: a working, honest local developer-loop process profiler.
 
 - **Rust core (`kernelkite-core`)**
   - Serializable data model: `ProcessSample`, `Frame`, `NetworkSummary`,
+    `CaptureMeta`, `ProfileBundle` (bundle schema **v1**).
