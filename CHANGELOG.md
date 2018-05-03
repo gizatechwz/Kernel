@@ -25,3 +25,4 @@ Initial release: a working, honest local developer-loop process profiler.
       **Implemented.**
     - `ebpf` — explicitly **not implemented**; returns `Error::Unsupported` and
       never fabricates data. Gated behind the `ebpf` cargo feature.
+  - Robust `/proc/<pid>/stat` parser that handles `comm` values containing
