@@ -24,3 +24,4 @@ Initial release: a working, honest local developer-loop process profiler.
     - `fixture` — deterministic cross-platform replay of recorded timelines.
       **Implemented.**
     - `ebpf` — explicitly **not implemented**; returns `Error::Unsupported` and
+      never fabricates data. Gated behind the `ebpf` cargo feature.
