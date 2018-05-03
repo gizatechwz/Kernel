@@ -23,3 +23,4 @@ Initial release: a working, honest local developer-loop process profiler.
       summary (`net/dev`). **Implemented.**
     - `fixture` — deterministic cross-platform replay of recorded timelines.
       **Implemented.**
+    - `ebpf` — explicitly **not implemented**; returns `Error::Unsupported` and
