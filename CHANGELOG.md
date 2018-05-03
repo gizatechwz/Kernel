@@ -20,3 +20,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - `Sampler` trait with three backends:
     - `proc` — Linux `/proc` sampler reading CPU (`stat`), memory (`statm`),
       block I/O (`io`), open fds (`fd/`) and an optional host-wide network
+      summary (`net/dev`). **Implemented.**
