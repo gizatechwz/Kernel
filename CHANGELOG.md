@@ -27,3 +27,4 @@ Initial release: a working, honest local developer-loop process profiler.
       never fabricates data. Gated behind the `ebpf` cargo feature.
   - Robust `/proc/<pid>/stat` parser that handles `comm` values containing
     spaces and parentheses.
+  - Pid filters: `All`, `Subtree(pid)`, `Set(pids)`.
