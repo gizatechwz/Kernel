@@ -28,3 +28,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - Robust `/proc/<pid>/stat` parser that handles `comm` values containing
     spaces and parentheses.
   - Pid filters: `All`, `Subtree(pid)`, `Set(pids)`.
+  - Live command runner (`run_and_profile`) that spawns a child, profiles its
