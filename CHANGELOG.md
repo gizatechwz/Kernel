@@ -29,3 +29,4 @@ Initial release: a working, honest local developer-loop process profiler.
     spaces and parentheses.
   - Pid filters: `All`, `Subtree(pid)`, `Set(pids)`.
   - Live command runner (`run_and_profile`) that spawns a child, profiles its
+    process subtree on cadence, and records the exit code.
