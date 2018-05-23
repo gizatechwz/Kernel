@@ -32,3 +32,4 @@ Initial release: a working, honest local developer-loop process profiler.
     process subtree on cadence, and records the exit code.
   - Capture loop (`capture`) with a safety frame bound.
   - Analysis: `summarize` (CPU seconds, peak RSS, I/O and network deltas) and
+    `compare` (before/after `Delta`s with percentage change).
