@@ -34,3 +34,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - Analysis: `summarize` (CPU seconds, peak RSS, I/O and network deltas) and
     `compare` (before/after `Delta`s with percentage change).
   - Deterministic JSON bundle I/O with schema-version validation.
+  - Cross-platform compilation via `cfg` guards: on non-Linux hosts the `proc`
