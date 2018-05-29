@@ -36,3 +36,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - Deterministic JSON bundle I/O with schema-version validation.
   - Cross-platform compilation via `cfg` guards: on non-Linux hosts the `proc`
     backend is a compile-time shim that reports `Unsupported`.
+- **CLI (`kernelkite`)**
