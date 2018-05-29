@@ -37,3 +37,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - Cross-platform compilation via `cfg` guards: on non-Linux hosts the `proc`
     backend is a compile-time shim that reports `Unsupported`.
 - **CLI (`kernelkite`)**
+  - Subcommands: `run`, `replay`, `summary`, `compare`, `tree`, `viewer`,
