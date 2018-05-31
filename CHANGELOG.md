@@ -40,3 +40,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - Subcommands: `run`, `replay`, `summary`, `compare`, `tree`, `viewer`,
     `help`, `version`.
   - Global flags: `--interval-ms`, `--max-frames`, `--label`, `--network`,
+    `--json`.
