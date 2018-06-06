@@ -42,3 +42,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - Global flags: `--interval-ms`, `--max-frames`, `--label`, `--network`,
     `--json`.
   - Dependency-light hand-rolled argument parser.
+  - Human-readable and `--json` output for `summary` and `compare`.
