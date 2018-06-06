@@ -41,3 +41,4 @@ Initial release: a working, honest local developer-loop process profiler.
     `help`, `version`.
   - Global flags: `--interval-ms`, `--max-frames`, `--label`, `--network`,
     `--json`.
+  - Dependency-light hand-rolled argument parser.
