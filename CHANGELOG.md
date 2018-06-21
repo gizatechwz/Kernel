@@ -44,3 +44,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - Dependency-light hand-rolled argument parser.
   - Human-readable and `--json` output for `summary` and `compare`.
 - **TypeScript timeline viewer (`@kernelkite/viewer`)**
+  - Strict, defensively-validated viewer-document parser.
