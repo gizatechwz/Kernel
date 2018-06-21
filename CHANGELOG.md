@@ -47,3 +47,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - Strict, defensively-validated viewer-document parser.
   - Framework-free inline-SVG timeline renderer (per-process CPU sparklines +
     peak-memory annotations) and a standalone-HTML wrapper with no remote assets.
+  - Node CLI `kernelkite-render` to turn a viewer document into SVG/HTML.
