@@ -46,3 +46,4 @@ Initial release: a working, honest local developer-loop process profiler.
 - **TypeScript timeline viewer (`@kernelkite/viewer`)**
   - Strict, defensively-validated viewer-document parser.
   - Framework-free inline-SVG timeline renderer (per-process CPU sparklines +
+    peak-memory annotations) and a standalone-HTML wrapper with no remote assets.
