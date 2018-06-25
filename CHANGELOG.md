@@ -50,3 +50,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - Node CLI `kernelkite-render` to turn a viewer document into SVG/HTML.
 - **Fixtures & samples**
   - `fixtures/cargo-build-before.json`, `fixtures/cargo-build-after.json`.
+  - Generated `samples/` bundles, comparison, viewer documents and a rendered
