@@ -52,3 +52,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - `fixtures/cargo-build-before.json`, `fixtures/cargo-build-after.json`.
   - Generated `samples/` bundles, comparison, viewer documents and a rendered
     timeline (reproducible via `make samples`).
+- **Docs & assets**
