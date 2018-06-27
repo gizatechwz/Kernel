@@ -53,3 +53,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - Generated `samples/` bundles, comparison, viewer documents and a rendered
     timeline (reproducible via `make samples`).
 - **Docs & assets**
+  - `README.md` (kernel-city/kite themed).
