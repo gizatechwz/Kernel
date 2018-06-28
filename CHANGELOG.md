@@ -55,3 +55,4 @@ Initial release: a working, honest local developer-loop process profiler.
 - **Docs & assets**
   - `README.md` (kernel-city/kite themed).
   - `docs/PROFILE.md` — sampling methodology and bundle format reference.
+  - Two hand-authored, animated, fully local SVGs:
