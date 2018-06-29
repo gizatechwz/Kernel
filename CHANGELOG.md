@@ -57,3 +57,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - `docs/PROFILE.md` — sampling methodology and bundle format reference.
   - Two hand-authored, animated, fully local SVGs:
     `docs/assets/kernel-kite.svg`, `docs/assets/devloop-skyline.svg`.
+- **Tooling**
