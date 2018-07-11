@@ -58,3 +58,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - Two hand-authored, animated, fully local SVGs:
     `docs/assets/kernel-kite.svg`, `docs/assets/devloop-skyline.svg`.
 - **Tooling**
+  - `Makefile` with build/test/fmt/clippy/samples/clean targets.
