@@ -59,3 +59,4 @@ Initial release: a working, honest local developer-loop process profiler.
     `docs/assets/kernel-kite.svg`, `docs/assets/devloop-skyline.svg`.
 - **Tooling**
   - `Makefile` with build/test/fmt/clippy/samples/clean targets.
+  - GitHub Actions CI running the Rust suite on Linux (with real `/proc` tests)
