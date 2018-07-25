@@ -62,3 +62,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - GitHub Actions CI running the Rust suite on Linux (with real `/proc` tests)
     and Windows (cfg-guard build), plus the TypeScript build and tests.
 
+### Known limitations
