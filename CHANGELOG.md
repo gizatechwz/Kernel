@@ -61,3 +61,4 @@ Initial release: a working, honest local developer-loop process profiler.
   - `Makefile` with build/test/fmt/clippy/samples/clean targets.
   - GitHub Actions CI running the Rust suite on Linux (with real `/proc` tests)
     and Windows (cfg-guard build), plus the TypeScript build and tests.
+
