@@ -28,3 +28,35 @@ Because a fixture records its own timestamps and omits wall-clock time, the same
 ## Backends
 
 | Backend   | Status          | Platform   | Behavior                                            |
+|-----------|-----------------|------------|-----------------------------------------------------|
+| `proc`    | implemented     | Linux only | Samples `/proc` on every tick.                      |
+| `fixture` | implemented     | any OS     | Replays a recorded timeline, deterministically.     |
+| `ebpf`    | stub, not built | none       | Reserved. Returns `Error::Unsupported`, never fakes data. |
+
+The `ebpf` type exists so the enum, CLI, and roadmap describe the intended shape honestly. It loads no BPF program and every call returns an error. See [`crates/kernelkite-core/src/ebpf.rs`](crates/kernelkite-core/src/ebpf.rs).
+
+The `proc` backend is Linux-only, so the crate uses `cfg` guards to keep compiling on Windows and macOS, where the sampler becomes a compile-time shim that reports it needs Linux. On those hosts you use `fixture` replay to develop, demo, and test the whole tool.
+
+## Install and build
+
+Requirements: a stable Rust toolchain (1.74+) and, for the viewer, Node 18+.
+
+```bash
+git clone https://github.com/Mujung/KernelKite
+cd kernelkite
+
+cargo build --release          # -> target/release/kernelkite
+cd viewer && npm install && npm run build && cd ..
+```
+
+The Makefile wraps the common targets:
+
+```bash
+make build      # release build of the workspace
+make test       # full Rust test suite
+make viewer     # build + test the TS viewer
+make ci         # everything CI runs
+make demo       # summary + comparison from the shipped samples
+```
+
+## Usage walkthrough
