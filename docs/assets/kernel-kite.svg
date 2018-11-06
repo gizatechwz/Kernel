@@ -26,3 +26,15 @@
 
   <!-- launched command -->
   <g font-family="monospace">
+    <rect x="60" y="120" width="120" height="46" fill="none" stroke="#5fb3a1" stroke-width="2"/>
+    <text x="120" y="142" text-anchor="middle" font-size="13" fill="#e6edf3">cargo build</text>
+    <text x="120" y="158" text-anchor="middle" font-size="10" fill="#8fa3b8">launched cmd</text>
+  </g>
+
+  <!-- fork into subtree -->
+  <g stroke="#5fb3a1" stroke-width="2" fill="none">
+    <path d="M180 132 H 240 V 108 H 300"/>
+    <path d="M180 150 H 240 V 150 H 300"/>
+    <path d="M180 156 H 240 V 196 H 300"/>
+  </g>
+
