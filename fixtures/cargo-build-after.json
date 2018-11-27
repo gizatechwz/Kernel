@@ -19,3 +19,9 @@
       "t_ms": 500,
       "processes": [
         { "pid": 6000, "ppid": 4200, "comm": "cargo", "utime_ticks": 11, "stime_ticks": 4, "rss_bytes": 20971520, "vsize_bytes": 524288000, "threads": 6, "read_bytes": 131072, "write_bytes": 8192, "open_fds": 18 },
+        { "pid": 6010, "ppid": 6000, "comm": "rustc", "utime_ticks": 40, "stime_ticks": 9, "rss_bytes": 234881024, "vsize_bytes": 1476395008, "threads": 6, "read_bytes": 524288, "write_bytes": 131072, "open_fds": 44 }
+      ]
+    },
+    {
+      "t_ms": 750,
+      "processes": [
