@@ -61,3 +61,27 @@ Host-wide, once per frame when `--network` is set:
 | Field              | Source            | Notes                                              |
 |--------------------|-------------------|----------------------------------------------------|
 | `network.rx_bytes` | `/proc/net/dev`   | Sum of RX bytes across non-loopback interfaces.    |
+| `network.tx_bytes` | `/proc/net/dev`   | Sum of TX bytes across non-loopback interfaces.    |
+| `network.interfaces` | `/proc/net/dev` | Which interfaces contributed.                      |
+
+### Why the network summary is host-wide
+
+`/proc/net/dev` reports counters **per interface**, not per process. Attributing
+bytes to a specific process requires either connection-table correlation
+(`/proc/net/tcp` + socket inodes, which is racy and coarse) or a kernel probe
+(eBPF). kernelkite therefore reports network as an honest host-wide *summary*
+and leaves per-process attribution to the future eBPF backend. It never guesses.
+
+### Reading `/proc/<pid>/stat` correctly
+
+The `comm` field is wrapped in parentheses and can itself contain spaces and
+parentheses, e.g. `1234 ((my cmd)) S 1000 ...`. Splitting the whole line on
+whitespace therefore breaks. kernelkite locates the **last** `)` to terminate
+`comm`, then splits the remaining fields positionally per `proc(5)`. This is
+unit-tested in `proc_linux.rs::tests::parse_stat_handles_spaces_and_parens_in_comm`.
+
+## Process scope (pid filters)
+
+The `run` command profiles the **subtree** of the command it launches: the
+child pid plus every descendant observed in that frame. This is recomputed each
+frame, so compilers/linkers a build tool forks are captured as they appear and
