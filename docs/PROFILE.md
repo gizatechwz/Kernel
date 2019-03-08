@@ -110,3 +110,27 @@ into the aggregates a developer cares about:
 
 The viewer document computes a per-frame CPU **percentage** from the delta of
 cumulative ticks between adjacent frames:
+
+```
+cpu_pct = (Δticks / clock_ticks_per_sec) / Δt_seconds × 100
+```
+
+A value above 100 is expected and correct for a multi-threaded process using
+more than one core during the interval.
+
+## Bundle format (schema v1)
+
+A bundle is pretty-printed JSON with a stable field order, so the same in-memory
+bundle always serializes to identical bytes (verified by
+`bundle_json_roundtrip_is_stable`). Top-level shape:
+
+```jsonc
+{
+  "meta": {
+    "schema_version": 1,
+    "backend": "proc" | "fixture" | "ebpf",
+    "label": "before",
+    "command": ["cargo", "build"],      // present for live runs
+    "clock_ticks_per_sec": 100,
+    "page_size_bytes": 4096,
+    "interval_ms": 100,
