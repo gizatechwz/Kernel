@@ -73,3 +73,27 @@ bytes to a specific process requires either connection-table correlation
 and leaves per-process attribution to the future eBPF backend. It never guesses.
 
 ### Reading `/proc/<pid>/stat` correctly
+
+The `comm` field is wrapped in parentheses and can itself contain spaces and
+parentheses, e.g. `1234 ((my cmd)) S 1000 ...`. Splitting the whole line on
+whitespace therefore breaks. kernelkite locates the **last** `)` to terminate
+`comm`, then splits the remaining fields positionally per `proc(5)`. This is
+unit-tested in `proc_linux.rs::tests::parse_stat_handles_spaces_and_parens_in_comm`.
+
+## Process scope (pid filters)
+
+The `run` command profiles the **subtree** of the command it launches: the
+child pid plus every descendant observed in that frame. This is recomputed each
+frame, so compilers/linkers a build tool forks are captured as they appear and
+drop out as they exit. The core also supports `PidFilter::All` and an explicit
+`PidFilter::Set`.
+
+## Derived metrics
+
+Raw bundles store cumulative kernel counters. `kernelkite summary` turns them
+into the aggregates a developer cares about:
+
+- **cpu_seconds** — for each pid, `(last_cpu_ticks − first_cpu_ticks)` summed
+  across pids, divided by the host's `clock_ticks_per_sec`. This measures CPU
+  *consumed during the capture window*, robust to processes that started before
+  sampling began.
