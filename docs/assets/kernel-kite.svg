@@ -49,3 +49,15 @@
   </g>
 
   <!-- frames: each tick captures a column of counters -->
+  <g font-family="monospace">
+    <text x="430" y="90" font-size="11" fill="#8fa3b8">frames (cpu / rss / io)</text>
+    <g fill="#e0b341">
+      <rect x="430" y="100" width="10" height="60"/>
+      <rect x="450" y="112" width="10" height="48"/>
+      <rect x="470" y="120" width="10" height="40"/>
+      <rect x="490" y="108" width="10" height="52"/>
+      <rect x="510" y="128" width="10" height="32"/>
+      <rect x="530" y="134" width="10" height="26"/>
+      <rect x="550" y="140" width="10" height="20"/>
+    </g>
+    <line x1="428" y1="162" x2="562" y2="162" stroke="#3d4c5e" stroke-width="1"/>
