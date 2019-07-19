@@ -146,3 +146,27 @@ bundle always serializes to identical bytes (verified by
           "utime_ticks": 8, "stime_ticks": 3,
           "rss_bytes": 20971520, "vsize_bytes": 524288000,
           "threads": 6, "read_bytes": 65536, "write_bytes": 4096, "open_fds": 18 }
+      ],
+      "network": { "rx_bytes": 0, "tx_bytes": 0, "interfaces": ["eth0"] } // optional
+    }
+  ]
+}
+```
+
+Loading validates `schema_version`; a mismatch is a hard error
+(`schema_mismatch_is_rejected`).
+
+## Determinism
+
+- **Fixtures** never record wall-clock time and replay their own recorded
+  timestamps, so a replayed bundle is byte-for-byte reproducible
+  (`fixture_replay_is_deterministic`).
+- **BTreeMap** ordering for processes and stable struct field order make JSON
+  output canonical.
+- Fixture frames must be non-decreasing in `t_ms`; out-of-order input is
+  rejected (`fixture_rejects_out_of_order_frames`).
+
+This is what makes before/after comparisons trustworthy: the only thing that
+changed between two fixture-based runs is the input you changed.
+
+## Before/after comparisons
