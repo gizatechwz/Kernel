@@ -14,3 +14,10 @@
         { "pid": 5000, "ppid": 4200, "comm": "cargo", "utime_ticks": 8, "stime_ticks": 3, "rss_bytes": 20971520, "vsize_bytes": 524288000, "threads": 6, "read_bytes": 65536, "write_bytes": 4096, "open_fds": 18 },
         { "pid": 5010, "ppid": 5000, "comm": "rustc", "utime_ticks": 5, "stime_ticks": 2, "rss_bytes": 83886080, "vsize_bytes": 838860800, "threads": 2, "read_bytes": 131072, "write_bytes": 0, "open_fds": 22 }
       ]
+    },
+    {
+      "t_ms": 500,
+      "processes": [
+        { "pid": 5000, "ppid": 4200, "comm": "cargo", "utime_ticks": 12, "stime_ticks": 5, "rss_bytes": 22020096, "vsize_bytes": 524288000, "threads": 6, "read_bytes": 131072, "write_bytes": 8192, "open_fds": 20 },
+        { "pid": 5010, "ppid": 5000, "comm": "rustc", "utime_ticks": 34, "stime_ticks": 9, "rss_bytes": 268435456, "vsize_bytes": 1610612736, "threads": 4, "read_bytes": 524288, "write_bytes": 65536, "open_fds": 40 },
+        { "pid": 5011, "ppid": 5000, "comm": "rustc", "utime_ticks": 30, "stime_ticks": 8, "rss_bytes": 241172480, "vsize_bytes": 1543503872, "threads": 4, "read_bytes": 491520, "write_bytes": 61440, "open_fds": 38 }
