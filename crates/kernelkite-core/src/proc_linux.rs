@@ -354,3 +354,52 @@ mod tests {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
 
+        let mk = |pid: i32, ppid: i32, comm: &str, utime: u64| {
+            let p = root.join(pid.to_string());
+            std::fs::create_dir_all(p.join("fd")).unwrap();
+            // one fake open fd
+            std::fs::write(p.join("fd").join("0"), b"").unwrap();
+            let stat = format!(
+                "{pid} ({comm}) S {ppid} {pid} {pid} 0 -1 0 0 0 0 0 {utime} 10 0 0 20 0 3 0 \
+                 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"
+            );
+            std::fs::write(p.join("stat"), stat).unwrap();
+            // statm: size resident shared text lib data dt (in pages)
+            std::fs::write(p.join("statm"), "2000 500 100 1 0 300 0").unwrap();
+            std::fs::write(
+                p.join("io"),
+                "rchar: 1\nwchar: 1\nread_bytes: 4096\nwrite_bytes: 8192\n",
+            )
+            .unwrap();
+        };
+        mk(100, 1, "make", 50);
+        mk(101, 100, "cc1", 20);
+
+        let mut s = ProcSampler::rooted(PidFilter::All, false, root);
+        // Force a deterministic host_info for the assertion below.
+        s.host = HostInfo {
+            clock_ticks_per_sec: 100,
+            page_size_bytes: 4096,
+        };
+        let frame = s.sample(0).unwrap().unwrap();
+        assert_eq!(frame.processes.len(), 2);
+        let make = &frame.processes[&100];
+        assert_eq!(make.comm, "make");
+        assert_eq!(make.ppid, 1);
+        assert_eq!(make.utime_ticks, 50);
+        assert_eq!(make.rss_bytes, 500 * 4096);
+        assert_eq!(make.read_bytes, Some(4096));
+        assert_eq!(make.open_fds, Some(1));
+
+        // Subtree filter rooted at make should include cc1.
+        let mut sub = ProcSampler::rooted(PidFilter::Subtree(100), false, root);
+        let f2 = sub.sample(0).unwrap().unwrap();
+        assert_eq!(f2.processes.len(), 2);
+
+        // Subtree rooted at cc1 alone should include just cc1.
+        let mut leaf = ProcSampler::rooted(PidFilter::Subtree(101), false, root);
+        let f3 = leaf.sample(0).unwrap().unwrap();
+        assert_eq!(f3.processes.len(), 1);
+        assert!(f3.processes.contains_key(&101));
+    }
+# review note
