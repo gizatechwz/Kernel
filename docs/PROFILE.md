@@ -37,3 +37,27 @@ t=0ms     t=100ms    t=200ms    t=300ms   ...
 Because it samples rather than intercepts syscalls, kernelkite has low, bounded
 overhead and needs no elevated privileges beyond read access to the target
 processes' `/proc` entries. The tradeoff is temporal resolution: events shorter
+than one interval may fall between frames. For a build/test loop that runs for
+hundreds of milliseconds to minutes, a 50–200 ms interval captures the shape
+faithfully.
+
+## What is read on Linux (`proc` backend)
+
+For each selected pid, per frame:
+
+| Field           | Source                        | Notes                                                |
+|-----------------|-------------------------------|------------------------------------------------------|
+| `ppid`, `comm`  | `/proc/<pid>/stat`            | `comm` is parsed robustly even with spaces/parens.   |
+| `utime`,`stime` | `/proc/<pid>/stat`            | CPU time in clock ticks since process start (cumulative). |
+| `rss_bytes`     | `/proc/<pid>/statm` (resident)| `resident_pages × page_size`.                        |
+| `vsize_bytes`   | `/proc/<pid>/statm` (size)    | `size_pages × page_size`.                            |
+| `threads`       | `/proc/<pid>/stat`            | `num_threads`.                                       |
+| `read_bytes`    | `/proc/<pid>/io`              | Storage-layer bytes, cumulative. `None` if unreadable. |
+| `write_bytes`   | `/proc/<pid>/io`              | Storage-layer bytes, cumulative. `None` if unreadable. |
+| `open_fds`      | `/proc/<pid>/fd` (dir count)  | Count of entries. `None` if unreadable.              |
+
+Host-wide, once per frame when `--network` is set:
+
+| Field              | Source            | Notes                                              |
+|--------------------|-------------------|----------------------------------------------------|
+| `network.rx_bytes` | `/proc/net/dev`   | Sum of RX bytes across non-loopback interfaces.    |
