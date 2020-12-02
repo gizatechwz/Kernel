@@ -92,3 +92,35 @@ Profile summary: before [proc]
 ```
 
 That block is the exact output from `fixtures/cargo-build-before.json`. Reproduce it with `make demo`.
+
+Diff the two runs:
+
+```bash
+kernelkite compare before.bundle.json after.bundle.json
+```
+
+```text
+Comparison: before -> after
+
+metric                     before            after         change        pct
+----------------------------------------------------------------------------
+duration_ms              1500.000         1000.000       -500.000     -33.3%
+cpu_seconds                 2.790            1.230         -1.560     -55.9%
+peak_rss_bytes      988807168.000    391118848.000 -597688320.000     -60.4%
+distinct_pids               4.000            3.000         -1.000     -25.0%
+read_bytes            3506176.000      1507328.000   -1998848.000     -57.0%
+write_bytes           2691072.000      1196032.000   -1495040.000     -55.6%
+```
+
+<p align="center">
+  <img src="docs/assets/devloop-skyline.svg" alt="Before/after bar chart matching samples/comparison.json" width="880"/>
+</p>
+
+The chart proportions above come straight from `samples/comparison.json`: a third off wall time, more than half the CPU, and 60 percent less peak memory, with one fewer process in the subtree.
+
+Reconstruct the process lineage:
+
+```bash
+kernelkite tree before.bundle.json
+```
+
