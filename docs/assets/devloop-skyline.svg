@@ -36,3 +36,11 @@
     <rect x="4"  y="185" width="30" height="79" fill="#4f9d5c"/>
     <text x="-2" y="282" text-anchor="middle" font-size="11" fill="#c9d6e2">cpu</text>
     <text x="-2" y="298" text-anchor="middle" font-size="11" fill="#4f9d5c">-56%</text>
+  </g>
+
+  <!-- peak rss 943 -> 373 : 180 -> 71 -->
+  <g transform="translate(430,0)" font-family="monospace">
+    <rect x="-38" y="84" width="30" height="180" fill="#d0503f"/>
+    <rect x="4"  y="193" width="30" height="71" fill="#4f9d5c"/>
+    <text x="-2" y="282" text-anchor="middle" font-size="11" fill="#c9d6e2">peak rss</text>
+    <text x="-2" y="298" text-anchor="middle" font-size="11" fill="#4f9d5c">-60%</text>
