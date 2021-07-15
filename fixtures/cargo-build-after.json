@@ -31,3 +31,9 @@
       ]
     },
     {
+      "t_ms": 900,
+      "processes": [
+        { "pid": 6000, "ppid": 4200, "comm": "cargo", "utime_ticks": 14, "stime_ticks": 5, "rss_bytes": 15728640, "vsize_bytes": 419430400, "threads": 4, "read_bytes": 196608, "write_bytes": 16384, "open_fds": 13 },
+        { "pid": 6020, "ppid": 6010, "comm": "ld", "utime_ticks": 20, "stime_ticks": 7, "rss_bytes": 67108864, "vsize_bytes": 469762048, "threads": 1, "read_bytes": 786432, "write_bytes": 1572864, "open_fds": 18 }
+      ]
+    },
