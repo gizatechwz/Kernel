@@ -4,3 +4,9 @@
   "frames": [
     {
       "t_ms": 0,
+      "processes": [
+        { "pid": 6000, "ppid": 4200, "comm": "cargo", "utime_ticks": 2, "stime_ticks": 1, "rss_bytes": 12582912, "vsize_bytes": 419430400, "threads": 4, "read_bytes": 0, "write_bytes": 0, "open_fds": 12 }
+      ]
+    },
+    {
+      "t_ms": 250,
