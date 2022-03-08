@@ -123,3 +123,25 @@ where
     let mut meta = base_meta(&sampler, opts);
     meta.command = Some(command.to_vec());
 
+    let mut frames = Vec::new();
+    let start = Instant::now();
+
+    let exit_code = loop {
+        let t_ms = start.elapsed().as_millis() as u64;
+        if let Some(frame) = sampler.sample(t_ms)? {
+            frames.push(frame);
+        }
+        // Poll the child without blocking so we keep sampling on cadence.
+        if let Some(status) = child.try_wait()? {
+            break status.code();
+        }
+        if frames.len() >= opts.max_frames {
+            // Safety bound hit; stop sampling but still reap the child.
+            break child.wait()?.code();
+        }
+        std::thread::sleep(Duration::from_millis(opts.interval_ms));
+    };
+
+    meta.exit_code = exit_code;
+    Ok(ProfileBundle { meta, frames })
+# review note
