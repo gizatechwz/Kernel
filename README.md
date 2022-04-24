@@ -60,3 +60,35 @@ make demo       # summary + comparison from the shipped samples
 ```
 
 ## Usage walkthrough
+
+Profile a real build on Linux, scoped to the child and everything it forks:
+
+```bash
+kernelkite --label before --interval-ms 50 run before.bundle.json -- cargo build
+```
+
+Make your change, then capture the after run:
+
+```bash
+kernelkite --label after --interval-ms 50 run after.bundle.json -- cargo build
+```
+
+Print what the sampler saw:
+
+```bash
+kernelkite summary before.bundle.json
+```
+
+```text
+Profile summary: before [proc]
+  duration      : 1500 ms
+  frames        : 7
+  distinct pids : 4
+  cpu seconds   : 2.790
+  peak rss      : 943.00 MiB
+  disk read     : 3.34 MiB
+  disk write    : 2.57 MiB
+  network       : (not sampled)
+```
+
+That block is the exact output from `fixtures/cargo-build-before.json`. Reproduce it with `make demo`.
