@@ -12,3 +12,11 @@
   <text x="40" y="52" font-family="monospace" font-size="11" fill="#8fa3b8">baseline (red) against optimized (green), heights in proportion to real deltas</text>
 
   <!-- legend -->
+  <g font-family="monospace" font-size="11">
+    <rect x="660" y="26" width="14" height="14" fill="#d0503f"/>
+    <text x="680" y="38" fill="#c9d6e2">before</text>
+    <rect x="740" y="26" width="14" height="14" fill="#4f9d5c"/>
+    <text x="760" y="38" fill="#c9d6e2">after</text>
+  </g>
+
+  <!-- baseline street -->
