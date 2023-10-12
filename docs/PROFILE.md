@@ -25,3 +25,27 @@ up in a summary or a comparison, its provenance is described here.
 kernelkite is a **sampling** profiler, not a tracer. On a fixed cadence
 (`--interval-ms`, default 100 ms) it takes a snapshot of every process in scope
 and records it as one *frame*. A profile bundle is an ordered list of frames
+plus capture metadata.
+
+```
+t=0ms     t=100ms    t=200ms    t=300ms   ...
+[frame]   [frame]    [frame]    [frame]
+  |          |          |          |
+  +-- per-process CPU / memory / IO / fd counts, + optional network summary
+```
+
+Because it samples rather than intercepts syscalls, kernelkite has low, bounded
+overhead and needs no elevated privileges beyond read access to the target
+processes' `/proc` entries. The tradeoff is temporal resolution: events shorter
+than one interval may fall between frames. For a build/test loop that runs for
+hundreds of milliseconds to minutes, a 50–200 ms interval captures the shape
+faithfully.
+
+## What is read on Linux (`proc` backend)
+
+For each selected pid, per frame:
+
+| Field           | Source                        | Notes                                                |
+|-----------------|-------------------------------|------------------------------------------------------|
+| `ppid`, `comm`  | `/proc/<pid>/stat`            | `comm` is parsed robustly even with spaces/parens.   |
+| `utime`,`stime` | `/proc/<pid>/stat`            | CPU time in clock ticks since process start (cumulative). |
