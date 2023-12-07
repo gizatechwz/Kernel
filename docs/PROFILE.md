@@ -97,3 +97,28 @@ into the aggregates a developer cares about:
   across pids, divided by the host's `clock_ticks_per_sec`. This measures CPU
   *consumed during the capture window*, robust to processes that started before
   sampling began.
+- **peak_rss_bytes** — the maximum, over all frames, of the summed resident
+  memory of every process alive in that frame. A conservative "how much memory
+  did this loop need at once" figure.
+- **read_bytes / write_bytes** — the summed delta of each pid's cumulative I/O
+  counters. `None` when `/proc/<pid>/io` was not readable for any process.
+- **net_rx_bytes / net_tx_bytes** — last-minus-first of the host-wide network
+  summary. Present only if `--network` was used.
+- **duration_ms / frames / distinct_pids** — timeline shape.
+
+### CPU% in the viewer
+
+The viewer document computes a per-frame CPU **percentage** from the delta of
+cumulative ticks between adjacent frames:
+
+```
+cpu_pct = (Δticks / clock_ticks_per_sec) / Δt_seconds × 100
+```
+
+A value above 100 is expected and correct for a multi-threaded process using
+more than one core during the interval.
+
+## Bundle format (schema v1)
+
+A bundle is pretty-printed JSON with a stable field order, so the same in-memory
+bundle always serializes to identical bytes (verified by
