@@ -124,3 +124,35 @@ Reconstruct the process lineage:
 kernelkite tree before.bundle.json
 ```
 
+```text
+Process tree (4 pids)
+5000 cargo
+  5010 rustc
+    5020 ld
+  5011 rustc
+```
+
+Render a timeline. Export a viewer document, then produce a self-contained SVG or HTML page:
+
+```bash
+kernelkite viewer before.bundle.json before.viewer.json
+node viewer/dist/cli.js before.viewer.json before.timeline.html
+```
+
+The renderer also imports as a library:
+
+```ts
+import { parseViewerDocument, renderTimelineSvg } from "@kernelkite/viewer";
+
+const doc = parseViewerDocument(JSON.parse(await readFile("before.viewer.json", "utf8")));
+const svg = renderTimelineSvg(doc, { width: 1000 });
+```
+
+## Working anywhere with fixtures
+
+`/proc` only exists on Linux, but the tooling should run everywhere for development, demos, mixed-runner CI, and reproducible regression tests. A fixture is a JSON timeline plus the host constants used to record it. Replay turns it into a normal bundle:
+
+```bash
+kernelkite --label before replay fixtures/cargo-build-before.json samples/before.bundle.json
+kernelkite --label after  replay fixtures/cargo-build-after.json  samples/after.bundle.json
+```
