@@ -9,3 +9,14 @@
   <rect x="0" y="0" width="880" height="300" fill="#0f1720"/>
 
   <!-- interval ruler: the fixed sampling cadence -->
+  <g stroke="#3d4c5e" stroke-width="1">
+    <line x1="60" y1="70" x2="820" y2="70"/>
+    <line x1="120" y1="64" x2="120" y2="76"/>
+    <line x1="220" y1="64" x2="220" y2="76"/>
+    <line x1="320" y1="64" x2="320" y2="76"/>
+    <line x1="420" y1="64" x2="420" y2="76"/>
+    <line x1="520" y1="64" x2="520" y2="76"/>
+    <line x1="620" y1="64" x2="620" y2="76"/>
+  </g>
+  <text x="60" y="52" font-family="monospace" font-size="12" fill="#8fa3b8">fixed interval, tick by tick</text>
+  <!-- the sampling head sweeps the ruler in even steps -->
