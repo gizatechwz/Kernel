@@ -85,3 +85,28 @@ unit-tested in `proc_linux.rs::tests::parse_stat_handles_spaces_and_parens_in_co
 The `run` command profiles the **subtree** of the command it launches: the
 child pid plus every descendant observed in that frame. This is recomputed each
 frame, so compilers/linkers a build tool forks are captured as they appear and
+drop out as they exit. The core also supports `PidFilter::All` and an explicit
+`PidFilter::Set`.
+
+## Derived metrics
+
+Raw bundles store cumulative kernel counters. `kernelkite summary` turns them
+into the aggregates a developer cares about:
+
+- **cpu_seconds** — for each pid, `(last_cpu_ticks − first_cpu_ticks)` summed
+  across pids, divided by the host's `clock_ticks_per_sec`. This measures CPU
+  *consumed during the capture window*, robust to processes that started before
+  sampling began.
+- **peak_rss_bytes** — the maximum, over all frames, of the summed resident
+  memory of every process alive in that frame. A conservative "how much memory
+  did this loop need at once" figure.
+- **read_bytes / write_bytes** — the summed delta of each pid's cumulative I/O
+  counters. `None` when `/proc/<pid>/io` was not readable for any process.
+- **net_rx_bytes / net_tx_bytes** — last-minus-first of the host-wide network
+  summary. Present only if `--network` was used.
+- **duration_ms / frames / distinct_pids** — timeline shape.
+
+### CPU% in the viewer
+
+The viewer document computes a per-frame CPU **percentage** from the delta of
+cumulative ticks between adjacent frames:
