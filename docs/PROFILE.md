@@ -49,3 +49,27 @@ For each selected pid, per frame:
 |-----------------|-------------------------------|------------------------------------------------------|
 | `ppid`, `comm`  | `/proc/<pid>/stat`            | `comm` is parsed robustly even with spaces/parens.   |
 | `utime`,`stime` | `/proc/<pid>/stat`            | CPU time in clock ticks since process start (cumulative). |
+| `rss_bytes`     | `/proc/<pid>/statm` (resident)| `resident_pages × page_size`.                        |
+| `vsize_bytes`   | `/proc/<pid>/statm` (size)    | `size_pages × page_size`.                            |
+| `threads`       | `/proc/<pid>/stat`            | `num_threads`.                                       |
+| `read_bytes`    | `/proc/<pid>/io`              | Storage-layer bytes, cumulative. `None` if unreadable. |
+| `write_bytes`   | `/proc/<pid>/io`              | Storage-layer bytes, cumulative. `None` if unreadable. |
+| `open_fds`      | `/proc/<pid>/fd` (dir count)  | Count of entries. `None` if unreadable.              |
+
+Host-wide, once per frame when `--network` is set:
+
+| Field              | Source            | Notes                                              |
+|--------------------|-------------------|----------------------------------------------------|
+| `network.rx_bytes` | `/proc/net/dev`   | Sum of RX bytes across non-loopback interfaces.    |
+| `network.tx_bytes` | `/proc/net/dev`   | Sum of TX bytes across non-loopback interfaces.    |
+| `network.interfaces` | `/proc/net/dev` | Which interfaces contributed.                      |
+
+### Why the network summary is host-wide
+
+`/proc/net/dev` reports counters **per interface**, not per process. Attributing
+bytes to a specific process requires either connection-table correlation
+(`/proc/net/tcp` + socket inodes, which is racy and coarse) or a kernel probe
+(eBPF). kernelkite therefore reports network as an honest host-wide *summary*
+and leaves per-process attribution to the future eBPF backend. It never guesses.
+
+### Reading `/proc/<pid>/stat` correctly
