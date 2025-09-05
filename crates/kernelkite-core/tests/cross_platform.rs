@@ -145,3 +145,31 @@ fn fixture_rejects_out_of_order_frames() {
         frames: vec![Frame::new(100), Frame::new(50)],
     };
     // Ensure they carry at least one process so JSON is representative.
+    fixture.frames[0].insert(sample(1, 0, "init", 0, 4096));
+    let json = serde_json::to_string(&fixture).unwrap();
+    let err = kk::Fixture::from_json(&json).unwrap_err();
+    assert!(matches!(err, kk::Error::Invalid(_)));
+}
+
+#[test]
+fn process_tree_links_parent_and_child() {
+    let b = make_bundle("tree", 100, 4096);
+    let tree = b.process_tree();
+    // pid 1000's parent is 1; pid 1001's parent is 1000.
+    assert_eq!(tree.get(&1), Some(&vec![1000]));
+    assert_eq!(tree.get(&1000), Some(&vec![1001]));
+}
+
+#[test]
+fn ebpf_backend_is_not_implemented() {
+    let mut s = kk::ebpf::EbpfSampler::new();
+    assert_eq!(s.backend(), Backend::Ebpf);
+    let err = s.sample(0).unwrap_err();
+    match err {
+        kk::Error::Unsupported(msg) => {
+            assert!(msg.contains("eBPF"));
+            assert!(msg.contains("not implemented"));
+        }
+        other => panic!("expected Unsupported, got {other:?}"),
+    }
+}
