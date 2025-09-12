@@ -135,3 +135,30 @@ fn cmd_compare(cli: &Cli, before: &str, after: &str) -> kk::Result<ExitCode> {
     let b = kk::load(before)?;
     let a = kk::load(after)?;
     let cmp = kk::compare(&b, &a);
+    if cli.json {
+        println!("{}", serde_json::to_string_pretty(&cmp)?);
+    } else {
+        print!("{}", render::comparison_text(&cmp));
+    }
+    Ok(ExitCode::SUCCESS)
+}
+
+fn cmd_tree(bundle_path: &str) -> kk::Result<ExitCode> {
+    let bundle = kk::load(bundle_path)?;
+    print!("{}", render::tree_text(&bundle));
+    Ok(ExitCode::SUCCESS)
+}
+
+fn cmd_viewer(bundle_path: &str, out: Option<&str>) -> kk::Result<ExitCode> {
+    let bundle = kk::load(bundle_path)?;
+    let doc = render::viewer_document(&bundle);
+    let json = serde_json::to_string_pretty(&doc)?;
+    match out {
+        Some(path) => {
+            std::fs::write(path, json)?;
+            eprintln!("wrote viewer document -> {path}");
+        }
+        None => println!("{json}"),
+    }
+    Ok(ExitCode::SUCCESS)
+# review note
