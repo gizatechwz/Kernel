@@ -20,3 +20,11 @@
   </g>
 
   <!-- baseline street -->
+  <line x1="40" y1="264" x2="840" y2="264" stroke="#3d4c5e" stroke-width="2"/>
+
+  <!-- duration 1500 -> 1000 : 180 -> 120 -->
+  <g transform="translate(110,0)" font-family="monospace">
+    <rect x="-38" y="84" width="30" height="180" fill="#d0503f"/>
+    <rect x="4"  y="144" width="30" height="120" fill="#4f9d5c"/>
+    <text x="-2" y="282" text-anchor="middle" font-size="11" fill="#c9d6e2">duration</text>
+    <text x="-2" y="298" text-anchor="middle" font-size="11" fill="#4f9d5c">-33%</text>
