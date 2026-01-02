@@ -124,3 +124,133 @@ Reconstruct the process lineage:
 kernelkite tree before.bundle.json
 ```
 
+```text
+Process tree (4 pids)
+5000 cargo
+  5010 rustc
+    5020 ld
+  5011 rustc
+```
+
+Render a timeline. Export a viewer document, then produce a self-contained SVG or HTML page:
+
+```bash
+kernelkite viewer before.bundle.json before.viewer.json
+node viewer/dist/cli.js before.viewer.json before.timeline.html
+```
+
+The renderer also imports as a library:
+
+```ts
+import { parseViewerDocument, renderTimelineSvg } from "@kernelkite/viewer";
+
+const doc = parseViewerDocument(JSON.parse(await readFile("before.viewer.json", "utf8")));
+const svg = renderTimelineSvg(doc, { width: 1000 });
+```
+
+## Working anywhere with fixtures
+
+`/proc` only exists on Linux, but the tooling should run everywhere for development, demos, mixed-runner CI, and reproducible regression tests. A fixture is a JSON timeline plus the host constants used to record it. Replay turns it into a normal bundle:
+
+```bash
+kernelkite --label before replay fixtures/cargo-build-before.json samples/before.bundle.json
+kernelkite --label after  replay fixtures/cargo-build-after.json  samples/after.bundle.json
+```
+
+The shipped fixtures model a `cargo` build: `cargo` forks two parallel `rustc` processes that climb and burn, then `ld` links, then everything exits. The after fixture is the same build post-optimization, with fewer processes and lower peaks.
+
+## How the numbers are derived
+
+kernelkite is a sampling profiler. Every `--interval-ms` it snapshots each in-scope process into a frame; metrics come from deltas of cumulative kernel counters:
+
+- `cpu_seconds`: summed `(last - first)` CPU ticks per pid divided by the host tick rate.
+- `peak_rss_bytes`: max over frames of summed resident memory.
+- `read`/`write_bytes`: summed deltas of `/proc/<pid>/io` storage counters.
+- `network`: last-minus-first of a host-wide `/proc/net/dev` summary, labeled host-wide because per-process attribution needs a kernel probe that is not built.
+
+The one genuinely tricky parse, `/proc/<pid>/stat` whose `comm` field can contain spaces and parentheses like `(my cmd)`, is handled by finding the last `)` and splitting positionally, and it is unit-tested. The full field-by-field methodology, determinism guarantees, and limitations live in [`docs/PROFILE.md`](docs/PROFILE.md).
+
+## Layout
+
+```
+kernelkite/
+├── crates/
+│   ├── kernelkite-core/           # engine library
+│   │   └── src/                   # model, sampler, proc_linux, fixture, ebpf, runner, compare, bundle, error
+│   └── kernelkite-cli/            # the kernelkite binary (main, args, render)
+├── viewer/                        # TypeScript timeline viewer (index, model, timeline, cli + tests)
+├── fixtures/                      # deterministic input timelines
+├── samples/                       # generated bundles, comparison, viewer docs, SVG
+├── docs/                          # PROFILE.md + local SVG assets
+└── Makefile, LICENSE, CHANGELOG.md, .github/workflows/ci.yml
+```
+
+## CLI reference
+
+```
+kernelkite [GLOBAL FLAGS] <COMMAND> [ARGS]
+
+COMMANDS
+  run <bundle.json> -- <cmd> [args...]   Live-profile a command via /proc (Linux).
+  replay <fixture.json> <bundle.json>    Deterministically replay a fixture.
+  summary <bundle.json>                  Print derived metrics for a bundle.
+  compare <before.json> <after.json>     Before/after comparison report.
+  tree <bundle.json>                     Print the observed process tree.
+  viewer <bundle.json> [out.json]        Emit timeline JSON for the TS viewer.
+  help | version
+
+GLOBAL FLAGS
+  --interval-ms <N>   Sampling interval in ms (default 100).
+  --max-frames <N>    Max frames to capture (default 100).
+  --label <TEXT>      Label stored in the bundle.
+  --network           Include a host-wide network summary (Linux /proc).
+  --json              Machine-readable output for summary / compare.
+```
+
+Both `summary` and `compare` accept `--json` for piping:
+
+```bash
+kernelkite --json compare before.bundle.json after.bundle.json | jq '.deltas[] | select(.metric=="cpu_seconds")'
+```
+
+## Testing and CI
+
+- Rust: cross-platform tests (fixtures, comparison, bundle round-trip, schema validation, the eBPF stub refusal) run on every OS. On Linux an extra suite drives the real `/proc` parser against a synthetic procfs tree built in a temp directory.
+- TypeScript: `node --test` covers the document parser (including misaligned-array and XML-escaping edge cases) and the SVG renderer (valid root, one polyline per series, no remote URLs).
+- CI matrix: GitHub Actions builds and tests on Ubuntu and Windows, builds the `ebpf`-feature stub, and regenerates `samples/` to fail on drift.
+
+```bash
+cargo test --workspace           # Rust
+cd viewer && npm test            # TypeScript
+```
+
+## Design principles
+
+1. Measure processes, not runtimes. Watching the process subtree through `/proc` captures the whole loop regardless of the language that raised it.
+2. A bundle is a fact, a summary is an opinion. The on-disk bundle stores raw cumulative counters as the kernel reported them; derived numbers are computed from that fact at analysis time.
+3. Determinism is a feature. Stable field order, `BTreeMap` iteration, wall-clock omission for fixtures, and schema validation give "same input, same bytes".
+4. Small, auditable dependency surface. The core depends only on `serde` and `serde_json`; the error type is hand-written; the `sysconf` calls are two `extern "C"` lines. The CLI argument parser is hand-rolled.
+5. No fake capability. The eBPF stub refuses rather than pretends, and the network summary is labeled host-wide rather than dressed up as per-process.
+
+## FAQ
+
+**Does kernelkite need root?**
+No. It needs read access to the `/proc` entries of the processes it profiles, which for your own dev-loop commands is your own user. Profiling processes you do not own may require elevated privileges, as usual for `/proc`.
+
+**What is the overhead?**
+It is a sampling profiler, so cost is roughly one pass over `/proc` for the in-scope pids per interval. Tighten the interval for very short loops, widen it for long ones.
+
+**Why sampling instead of tracing?**
+Tracing every syscall is high-overhead and perturbs timing. Sampling gives a faithful shape of a loop that runs for hundreds of milliseconds or more, with bounded cost and no special privileges.
+
+**Can I profile something that is not a build?**
+Yes, anything that runs: `kernelkite run out.json -- pytest -q`, `... -- npm test`, `... -- ./ci.sh`.
+
+**Is any media in this repo fetched from the internet?**
+No. Both banners are hand-authored local SVGs in `docs/assets/` with no remote references. The viewer HTML output is likewise self-contained.
+
+## License
+
+MIT, see [LICENSE](LICENSE).
+
+# draft note 2
