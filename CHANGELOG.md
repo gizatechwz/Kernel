@@ -64,3 +64,12 @@ Initial release: a working, honest local developer-loop process profiler.
 
 ### Known limitations
 
+- Sampling profiler: sub-interval events may be missed.
+- Network is a host-wide summary; per-process attribution awaits the eBPF
+  backend.
+- The `ebpf` backend is a stub only.
+
+[Unreleased]: https://github.com/kernelkite/kernelkite/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/kernelkite/kernelkite/releases/tag/v0.1.0
+
+# draft note 1
