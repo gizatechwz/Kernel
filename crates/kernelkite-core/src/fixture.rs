@@ -65,3 +65,18 @@ impl FixtureSampler {
     }
 }
 
+impl Sampler for FixtureSampler {
+    fn backend(&self) -> Backend {
+        Backend::Fixture
+    }
+
+    fn host_info(&self) -> HostInfo {
+        self.host
+    }
+
+    /// The `_t_ms` hint is ignored: a fixture replays its own recorded
+    /// timestamps so the result is byte-for-byte reproducible.
+    fn sample(&mut self, _t_ms: u64) -> Result<Option<Frame>> {
+        Ok(self.frames.next())
+    }
+}
