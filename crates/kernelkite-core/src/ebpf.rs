@@ -39,3 +39,15 @@ impl Sampler for EbpfSampler {
         Backend::Ebpf
     }
 
+    fn host_info(&self) -> HostInfo {
+        self.host
+    }
+
+    fn sample(&mut self, _t_ms: u64) -> Result<Option<Frame>> {
+        Err(Error::Unsupported(
+            "eBPF backend is a planned future feature and is not implemented; \
+             use the `proc` backend on Linux or `fixture` replay elsewhere"
+                .into(),
+        ))
+    }
+}
