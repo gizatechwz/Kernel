@@ -94,3 +94,21 @@ pub mod proc_linux {
         }
     }
 
+    /// Non-Linux host detection just returns conventional defaults.
+    pub fn detect_host_info() -> HostInfo {
+        HostInfo::default()
+    }
+}
+
+// Convenient re-exports for downstream users.
+pub use bundle::{from_json, load, save, to_json};
+pub use compare::{compare, summarize, Comparison, Delta, Summary};
+pub use error::{Error, Result};
+pub use fixture::{Fixture, FixtureSampler};
+pub use model::{
+    Backend, CaptureMeta, Frame, NetworkSummary, ProcessSample, ProfileBundle,
+    BUNDLE_SCHEMA_VERSION,
+};
+pub use proc_linux::{PidFilter, ProcSampler};
+pub use runner::{capture, run_and_profile, CaptureOptions};
+pub use sampler::{HostInfo, Sampler};
