@@ -25,3 +25,10 @@ pub fn from_json(raw: &str) -> Result<ProfileBundle> {
 pub fn save(bundle: &ProfileBundle, path: impl AsRef<std::path::Path>) -> Result<()> {
     std::fs::write(path, to_json(bundle)?)?;
     Ok(())
+}
+
+/// Load a bundle from a file path.
+pub fn load(path: impl AsRef<std::path::Path>) -> Result<ProfileBundle> {
+    let raw = std::fs::read_to_string(path)?;
+    from_json(&raw)
+}
