@@ -171,3 +171,34 @@ pub fn compare(before: &ProfileBundle, after: &ProfileBundle) -> Comparison {
     let b = summarize(before);
     let a = summarize(after);
     let mut deltas = vec![
+        Delta::new("duration_ms", b.duration_ms as f64, a.duration_ms as f64),
+        Delta::new("cpu_seconds", b.cpu_seconds, a.cpu_seconds),
+        Delta::new(
+            "peak_rss_bytes",
+            b.peak_rss_bytes as f64,
+            a.peak_rss_bytes as f64,
+        ),
+        Delta::new(
+            "distinct_pids",
+            b.distinct_pids as f64,
+            a.distinct_pids as f64,
+        ),
+    ];
+    if let (Some(br), Some(ar)) = (b.read_bytes, a.read_bytes) {
+        deltas.push(Delta::new("read_bytes", br as f64, ar as f64));
+    }
+    if let (Some(bw), Some(aw)) = (b.write_bytes, a.write_bytes) {
+        deltas.push(Delta::new("write_bytes", bw as f64, aw as f64));
+    }
+    if let (Some(brx), Some(arx)) = (b.net_rx_bytes, a.net_rx_bytes) {
+        deltas.push(Delta::new("net_rx_bytes", brx as f64, arx as f64));
+    }
+    if let (Some(btx), Some(atx)) = (b.net_tx_bytes, a.net_tx_bytes) {
+        deltas.push(Delta::new("net_tx_bytes", btx as f64, atx as f64));
+    }
+    Comparison {
+        before: b,
+        after: a,
+        deltas,
+    }
+}
