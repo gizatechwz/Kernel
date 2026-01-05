@@ -49,3 +49,18 @@ function main(argv: string[]): number {
     process.stdout.write(svg + "\n");
     return 0;
   }
+
+  const output = outPath.toLowerCase().endsWith(".html")
+    ? renderStandaloneHtml(doc, svg)
+    : svg;
+  try {
+    writeFileSync(outPath, output);
+    process.stderr.write(`wrote ${outPath}\n`);
+  } catch (e) {
+    process.stderr.write(`error: cannot write ${outPath}: ${String(e)}\n`);
+    return 1;
+  }
+  return 0;
+}
+
+process.exit(main(process.argv));
