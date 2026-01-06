@@ -19,3 +19,31 @@
       "t_ms": 500,
       "processes": [
         { "pid": 6000, "ppid": 4200, "comm": "cargo", "utime_ticks": 11, "stime_ticks": 4, "rss_bytes": 20971520, "vsize_bytes": 524288000, "threads": 6, "read_bytes": 131072, "write_bytes": 8192, "open_fds": 18 },
+        { "pid": 6010, "ppid": 6000, "comm": "rustc", "utime_ticks": 40, "stime_ticks": 9, "rss_bytes": 234881024, "vsize_bytes": 1476395008, "threads": 6, "read_bytes": 524288, "write_bytes": 131072, "open_fds": 44 }
+      ]
+    },
+    {
+      "t_ms": 750,
+      "processes": [
+        { "pid": 6000, "ppid": 4200, "comm": "cargo", "utime_ticks": 13, "stime_ticks": 5, "rss_bytes": 22020096, "vsize_bytes": 524288000, "threads": 6, "read_bytes": 196608, "write_bytes": 16384, "open_fds": 19 },
+        { "pid": 6010, "ppid": 6000, "comm": "rustc", "utime_ticks": 82, "stime_ticks": 16, "rss_bytes": 318767104, "vsize_bytes": 1879048192, "threads": 8, "read_bytes": 1048576, "write_bytes": 393216, "open_fds": 54 },
+        { "pid": 6020, "ppid": 6010, "comm": "ld", "utime_ticks": 8, "stime_ticks": 4, "rss_bytes": 50331648, "vsize_bytes": 402653184, "threads": 1, "read_bytes": 393216, "write_bytes": 786432, "open_fds": 16 }
+      ]
+    },
+    {
+      "t_ms": 900,
+      "processes": [
+        { "pid": 6000, "ppid": 4200, "comm": "cargo", "utime_ticks": 14, "stime_ticks": 5, "rss_bytes": 15728640, "vsize_bytes": 419430400, "threads": 4, "read_bytes": 196608, "write_bytes": 16384, "open_fds": 13 },
+        { "pid": 6020, "ppid": 6010, "comm": "ld", "utime_ticks": 20, "stime_ticks": 7, "rss_bytes": 67108864, "vsize_bytes": 469762048, "threads": 1, "read_bytes": 786432, "write_bytes": 1572864, "open_fds": 18 }
+      ]
+    },
+    {
+      "t_ms": 1000,
+      "processes": [
+        { "pid": 6000, "ppid": 4200, "comm": "cargo", "utime_ticks": 15, "stime_ticks": 6, "rss_bytes": 13631488, "vsize_bytes": 419430400, "threads": 4, "read_bytes": 196608, "write_bytes": 16384, "open_fds": 12 }
+      ]
+    }
+  ]
+}
+
+# draft note 6
