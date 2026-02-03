@@ -210,3 +210,48 @@
           "pid": 5000,
           "ppid": 4200,
           "comm": "cargo",
+          "utime_ticks": 20,
+          "stime_ticks": 8,
+          "rss_bytes": 20971520,
+          "vsize_bytes": 524288000,
+          "threads": 6,
+          "read_bytes": 262144,
+          "write_bytes": 32768,
+          "open_fds": 16
+        },
+        {
+          "pid": 5020,
+          "ppid": 5010,
+          "comm": "ld",
+          "utime_ticks": 24,
+          "stime_ticks": 9,
+          "rss_bytes": 92274688,
+          "vsize_bytes": 536870912,
+          "threads": 1,
+          "read_bytes": 1048576,
+          "write_bytes": 2097152,
+          "open_fds": 20
+        }
+      ]
+    },
+    {
+      "t_ms": 1500,
+      "processes": [
+        {
+          "pid": 5000,
+          "ppid": 4200,
+          "comm": "cargo",
+          "utime_ticks": 21,
+          "stime_ticks": 8,
+          "rss_bytes": 14680064,
+          "vsize_bytes": 419430400,
+          "threads": 4,
+          "read_bytes": 262144,
+          "write_bytes": 32768,
+          "open_fds": 12
+        }
+      ]
+    }
+  ]
+}
+# draft note 11
