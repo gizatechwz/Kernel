@@ -56,4 +56,4 @@ pub trait Sampler {
 
     /// Host constants used to interpret counters from this sampler.
     fn host_info(&self) -> HostInfo;
-# review note
+}
