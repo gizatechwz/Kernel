@@ -37,3 +37,15 @@ test("rejects non-object input", () => {
   assert.throws(() => parseViewerDocument(42), /must be an object/);
 });
 
+test("rejects missing fields", () => {
+  const bad: Record<string, unknown> = structuredClone(valid);
+  delete bad.backend;
+  assert.throws(() => parseViewerDocument(bad), /backend/);
+});
+
+test("humanBytes formats binary units", () => {
+  assert.equal(humanBytes(512), "512 B");
+  assert.equal(humanBytes(1024), "1.00 KiB");
+  assert.equal(humanBytes(1048576), "1.00 MiB");
+  assert.equal(humanBytes(1610612736), "1.50 GiB");
+});
