@@ -59,3 +59,19 @@ test("escapes XML-sensitive characters in comm", () => {
         cpu_pct: [0, 1],
         rss_bytes: [0, 1],
       },
+    ],
+  });
+  const svg = renderTimelineSvg(tricky);
+  assert.match(svg, /a&lt;b&gt;&amp;c/);
+  assert.ok(!svg.includes("a<b>&c"));
+});
+
+test("standalone HTML contains the SVG and no remote URLs", () => {
+  const svg = renderTimelineSvg(doc);
+  const html = renderStandaloneHtml(doc, svg);
+  assert.match(html, /<!DOCTYPE html>/);
+  assert.ok(html.includes(svg));
+  // The only permitted absolute URL is the SVG XML namespace declaration.
+  const withoutSvgNs = html.replace(/http:\/\/www\.w3\.org\/2000\/svg/g, "");
+  assert.ok(!/https?:\/\//.test(withoutSvgNs));
+});
