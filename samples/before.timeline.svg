@@ -13,3 +13,10 @@
 <line x1="16" y1="140" x2="884" y2="140" stroke="#21262d" stroke-width="1"/>
 <text x="16" y="166" fill="#54a24b" font-family="monospace" font-size="12">5011 rustc</text>
 <text x="150" y="166" fill="#8b949e" font-family="monospace" font-size="10" text-anchor="end">432.00 MiB</text>
+<polyline points="166.0,180.0 285.7,180.0 405.3,180.0 525.0,146.2 644.7,146.2 764.3,180.0 884.0,180.0" fill="none" stroke="#54a24b" stroke-width="2" stroke-linejoin="round"/>
+<line x1="16" y1="184" x2="884" y2="184" stroke="#21262d" stroke-width="1"/>
+<text x="16" y="210" fill="#e45756" font-family="monospace" font-size="12">5020 ld</text>
+<text x="150" y="210" fill="#8b949e" font-family="monospace" font-size="10" text-anchor="end">88.00 MiB</text>
+<polyline points="166.0,224.0 285.7,224.0 405.3,224.0 525.0,224.0 644.7,224.0 764.3,206.7 884.0,224.0" fill="none" stroke="#e45756" stroke-width="2" stroke-linejoin="round"/>
+</svg>
+# draft note 12
