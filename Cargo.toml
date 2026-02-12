@@ -13,3 +13,14 @@ license = "MIT"
 authors = ["KernelKite contributors"]
 repository = "https://github.com/Mujung/KernelKite"
 description = "Linux-first local developer-loop process profiler"
+
+[workspace.dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+
+# draft note 16
