@@ -49,3 +49,26 @@
     },
     {
       "metric": "distinct_pids",
+      "before": 4.0,
+      "after": 3.0,
+      "abs_change": -1.0,
+      "pct_change": -25.0
+    },
+    {
+      "metric": "read_bytes",
+      "before": 3506176.0,
+      "after": 1507328.0,
+      "abs_change": -1998848.0,
+      "pct_change": -57.009345794392516
+    },
+    {
+      "metric": "write_bytes",
+      "before": 2691072.0,
+      "after": 1196032.0,
+      "abs_change": -1495040.0,
+      "pct_change": -55.55555555555556
+    }
+  ]
+}
+
+# draft note 14
