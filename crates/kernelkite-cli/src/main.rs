@@ -161,4 +161,4 @@ fn cmd_viewer(bundle_path: &str, out: Option<&str>) -> kk::Result<ExitCode> {
         None => println!("{json}"),
     }
     Ok(ExitCode::SUCCESS)
-# review note
+}
