@@ -144,3 +144,32 @@ export function renderTimelineSvg(
 }
 
 /** Wrap a rendered SVG in a minimal standalone HTML page (no remote assets). */
+export function renderStandaloneHtml(doc: ViewerDocument, svg: string): string {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>kernelkite — ${escapeXml(doc.label)}</title>
+<style>
+  body { margin: 0; background: #010409; color: #e6edf3;
+         font-family: ui-monospace, monospace; }
+  main { max-width: 960px; margin: 0 auto; padding: 24px; }
+  h1 { font-size: 18px; }
+  .card { background: #0d1117; border: 1px solid #21262d; border-radius: 8px;
+          padding: 12px; overflow-x: auto; }
+  footer { color: #8b949e; font-size: 11px; margin-top: 16px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>kernelkite timeline</h1>
+  <div class="card">${svg}</div>
+  <footer>Rendered locally from a kernelkite viewer document · backend: ${escapeXml(
+    doc.backend,
+  )}</footer>
+</main>
+</body>
+</html>
+`;
+}
