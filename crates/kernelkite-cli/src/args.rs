@@ -171,3 +171,34 @@ fn parse_command(sub: &str, rest: Vec<String>) -> Result<Command, String> {
             let bundle = rest
                 .into_iter()
                 .next()
+                .ok_or_else(|| "summary: missing bundle path".to_string())?;
+            Ok(Command::Summary { bundle })
+        }
+        "compare" => {
+            let mut p = rest.into_iter();
+            let before = p
+                .next()
+                .ok_or_else(|| "compare: missing before bundle".to_string())?;
+            let after = p
+                .next()
+                .ok_or_else(|| "compare: missing after bundle".to_string())?;
+            Ok(Command::Compare { before, after })
+        }
+        "tree" => {
+            let bundle = rest
+                .into_iter()
+                .next()
+                .ok_or_else(|| "tree: missing bundle path".to_string())?;
+            Ok(Command::Tree { bundle })
+        }
+        "viewer" => {
+            let mut p = rest.into_iter();
+            let bundle = p
+                .next()
+                .ok_or_else(|| "viewer: missing bundle path".to_string())?;
+            let out = p.next();
+            Ok(Command::Viewer { bundle, out })
+        }
+        other => Err(format!("unknown command `{other}`")),
+    }
+}
