@@ -72,4 +72,4 @@ Initial release: a working, honest local developer-loop process profiler.
 [Unreleased]: https://github.com/kernelkite/kernelkite/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/kernelkite/kernelkite/releases/tag/v0.1.0
 
-# draft note 17
+# draft note 33
