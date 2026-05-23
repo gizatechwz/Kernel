@@ -23,4 +23,4 @@ opt-level = 3
 lto = "thin"
 codegen-units = 1
 
-# draft note 32
+# draft note 48
