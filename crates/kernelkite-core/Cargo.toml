@@ -25,3 +25,4 @@ ebpf = []
 
 [lib]
 name = "kernelkite_core"
+path = "src/lib.rs"
