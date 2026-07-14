@@ -101,5 +101,3 @@ jobs:
           make samples
           git diff --exit-code -- samples \
             || (echo "::error::samples/ drifted; run 'make samples' and commit" && exit 1)
-
-# draft note 63
