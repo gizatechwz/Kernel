@@ -1,1 +1,6 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Bundle drift
+    url: https://github.com/Mujung/KernelKite/discussions
+    about: Samples drift / determinism questions go to Discussions first
+
