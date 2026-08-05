@@ -1,4 +1,3 @@
-@@
 ---
 name: Bug report
 about: Bundle or metric that looks wrong
