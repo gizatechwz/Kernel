@@ -190,5 +190,3 @@ build optimization: `-33%` duration, `-56%` CPU, `-60%` peak RSS (see
 - **No per-process network** without eBPF (see above).
 - **Non-Linux hosts:** the `proc` backend returns `Unsupported`; use `fixture`
   replay to develop, demo, and test the tooling anywhere.
-
-# draft note 67
