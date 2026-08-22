@@ -252,5 +252,3 @@ No. Both banners are hand-authored local SVGs in `docs/assets/` with no remote r
 ## License
 
 MIT, see [LICENSE](LICENSE).
-
-# draft note 66
